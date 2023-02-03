@@ -87,6 +87,9 @@ body {
 	max-width: 100vw;
 	overflow-x: hidden;
 }
+body{
+	background-color: #fafbfc;
+}
 
 a {
 	color: inherit;
