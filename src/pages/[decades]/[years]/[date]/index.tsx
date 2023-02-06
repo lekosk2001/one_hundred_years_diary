@@ -2,7 +2,7 @@ import React from 'react'
 import { useRouter } from 'next/router'
 type Props = {}
 
-const index = (props: Props) => {
+const Date = (props: Props) => {
 
     const router = useRouter()
     return (
@@ -10,4 +10,4 @@ const index = (props: Props) => {
     )
 }
 
-export default index
+export default Date
