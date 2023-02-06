@@ -6,7 +6,7 @@ const Date = (props: Props) => {
 
     const router = useRouter()
     return (
-        <>{router.query.date}</>
+        <div>{`${router.query.years}-${router.query.date}`}</div>
     )
 }
 

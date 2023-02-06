@@ -74,10 +74,10 @@ const Layout = (props: Props) => {
                 <Space />
                 <LinkLists>
                     <Link href={"/"}><LinkStyle><HomeOutlined /> 홈</LinkStyle></Link>
-                    <Link href={"/"}><LinkStyle><BarsOutlined /> 피드</LinkStyle></Link>
-                    <Link href={"/"}><LinkStyle><PlusCircleOutlined /> 작성</LinkStyle></Link>
-                    <Link href={"/"}><LinkStyle><DotChartOutlined /> 통계</LinkStyle></Link>
-                    <Link href={"/"}><LinkStyle><SettingOutlined /> 설정</LinkStyle></Link>
+                    <Link href={"/feed"}><LinkStyle><BarsOutlined /> 피드</LinkStyle></Link>
+                    <Link href={"/create"}><LinkStyle><PlusCircleOutlined /> 작성</LinkStyle></Link>
+                    <Link href={"/statistics"}><LinkStyle><DotChartOutlined /> 통계</LinkStyle></Link>
+                    <Link href={"/setting"}><LinkStyle><SettingOutlined /> 설정</LinkStyle></Link>
                 </LinkLists>
             </Aside>
             <Main>{props.children}</Main>
