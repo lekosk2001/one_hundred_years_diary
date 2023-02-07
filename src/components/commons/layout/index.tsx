@@ -1,5 +1,5 @@
 import * as S from './layout_style'
-import { Main } from '@/styles/home_style'
+import { Main } from '@/styles/common_style'
 import { BarsOutlined, DotChartOutlined, HomeOutlined, PlusCircleOutlined, SettingOutlined } from '@ant-design/icons'
 import { Button, Input } from 'antd'
 import dayjs from 'dayjs'
@@ -9,7 +9,6 @@ import React, { ChangeEvent, useState } from 'react'
 type Props = {
     children: JSX.Element
 }
-
 
 const Layout = (props: Props) => {
     const today = dayjs()
@@ -30,26 +29,24 @@ const Layout = (props: Props) => {
                 <S.LinkLists>
                     <Link href={"/"}><S.LinkStyle><HomeOutlined /> 홈</S.LinkStyle></Link>
                     <Link href={"/feed"}><S.LinkStyle><BarsOutlined /> 피드</S.LinkStyle></Link>
-                    <Link href={"/create"}><S.LinkStyle><PlusCircleOutlined /> 작성</S.LinkStyle></Link>
+                    <Link href={`/${today.year()}/${today.format("MM-DD")}/create`}><S.LinkStyle><PlusCircleOutlined /> 작성</S.LinkStyle></Link>
                     <Link href={"/statistics"}><S.LinkStyle><DotChartOutlined /> 통계</S.LinkStyle></Link>
                     <Link href={"/setting"}><S.LinkStyle><SettingOutlined /> 설정</S.LinkStyle></Link>
                 </S.LinkLists>
                 <S.Space />
                 <Button onClick={() => { setSizeToggle((prev) => !prev) }}>{sizeToggle ? "확대" : "축소"}</Button>
             </S.Aside>
-            <Main style={{
-                width: sizeToggle ? "360px" : "768px"
-            }}
 
+            <Main
+                style={{
+                    width: sizeToggle ? "360px" : "768px"
+                }}
             >{props.children}</Main>
+
             <S.Aside>
-
-
                 <p>오늘 : {today.format("YYYY-MM-DD")}</p>
-
                 <p>내 생일 : </p>
                 <Input type='date' onChange={onchangeBirthDay} defaultValue={birthDay.format("YYYY-MM-DD")}></Input>
-
                 <div>
                     <p>지금까지 : </p>
                     <p>{today.diff(birthDay, "day")}일</p>

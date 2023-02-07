@@ -1,14 +1,14 @@
-import * as S from '@/styles/home_style'
+import * as S from '@/styles/common_style'
 import { Button } from 'antd'
 import dayjs, { Dayjs } from 'dayjs'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import 'dayjs/locale/ko';
 
 type Props = {}
 
 const Years = (props: Props) => {
 
-
+    dayjs.locale('ko');
     const router = useRouter()
     const CurrentYear = Number(router.query.years)
     if (!CurrentYear) { return <></> }
@@ -48,11 +48,9 @@ const Years = (props: Props) => {
         return allDays
     }
 
-
     const fullCalendar = []
     for (let index = 0; index < 12; index++) {
         fullCalendar.push(<S.MonthContainer key={index}>
-
 
             <S.MonthTitle>
                 <S.CurrentYearMini>{CurrentYear}</S.CurrentYearMini>
@@ -65,7 +63,11 @@ const Years = (props: Props) => {
     }
     return (
         <>
-            <S.Title>{CurrentYear}년</S.Title>
+
+            <S.Title>{CurrentYear + "년"}
+                {CurrentYear === today.year() && <S.TodayInfo>{"오늘은 " + today.format("YYYY년 MM월 DD일 dddd입니다.")}</S.TodayInfo>}
+            </S.Title>
+
             <S.ButtonsWrapper>
                 <Button onClick={() => { router.push(`/${CurrentYear - 1}`) }}>지난 해</Button>
                 <Button onClick={() => { router.push(`${dayjs().year()}`) }}>올해</Button>

@@ -12,7 +12,17 @@ export const Main = styled.main`
     overflow: hidden;
 `
 
+
+export const TodayInfo = styled.p`
+font-size: 13px;
+color: gray;
+font-weight: 400;
+letter-spacing: 0px;
+padding: 3px 0px;
+`
+
 export const Title = styled.h1`
+    letter-spacing: -1px;
     width: 100%;
     padding-bottom: 20px;
     border-bottom: 1px solid #dae1e6;
