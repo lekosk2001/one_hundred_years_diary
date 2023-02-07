@@ -3,6 +3,7 @@ import { Button } from 'antd'
 import dayjs, { Dayjs } from 'dayjs'
 import { useRouter } from 'next/router'
 import 'dayjs/locale/ko';
+import { CalendarOutlined, CaretLeftOutlined, CaretRightOutlined, ClockCircleOutlined, LeftOutlined, PicLeftOutlined, RightOutlined } from '@ant-design/icons';
 
 type Props = {}
 
@@ -50,28 +51,43 @@ const Years = (props: Props) => {
 
     const fullCalendar = []
     for (let index = 0; index < 12; index++) {
-        fullCalendar.push(<S.MonthContainer key={index}>
-
-            <S.MonthTitle>
-                <S.CurrentYearMini>{CurrentYear}</S.CurrentYearMini>
-                {index + 1}
-            </S.MonthTitle>
-            <S.DayBlockContainer>
-                {Calendar(dayjs().year(CurrentYear).startOf("year").month(index))}
-            </S.DayBlockContainer>
-        </S.MonthContainer>)
+        fullCalendar.push(
+            <S.MonthContainer key={index}>
+                <S.MonthTitle>
+                    <S.CurrentYearMini>{CurrentYear}</S.CurrentYearMini>
+                    {index + 1}
+                </S.MonthTitle>
+                <S.DayBlockContainer>
+                    {Calendar(dayjs().year(CurrentYear).startOf("year").month(index))}
+                </S.DayBlockContainer>
+            </S.MonthContainer>
+        )
     }
     return (
         <>
 
             <S.Title>{CurrentYear + "년"}
-                {CurrentYear === today.year() && <S.TodayInfo>{"오늘은 " + today.format("YYYY년 MM월 DD일 dddd입니다.")}</S.TodayInfo>}
+                {CurrentYear === today.year() && <S.TodayInfo>
+                    {"오늘은 " + today.format("YYYY년 MM월 DD일 dddd입니다.")}
+                </S.TodayInfo>}
+                {CurrentYear < today.year() && <S.TodayInfo>
+                    {"오늘로부터 " + (today.year() - CurrentYear) + "년 전입니다."}
+                </S.TodayInfo>}
+
+                {CurrentYear > today.year() && <S.TodayInfo>
+                    {"오늘로부터 " + (CurrentYear - today.year()) + "년 후입니다."}
+                </S.TodayInfo>}
             </S.Title>
 
             <S.ButtonsWrapper>
-                <Button onClick={() => { router.push(`/${CurrentYear - 1}`) }}>지난 해</Button>
-                <Button onClick={() => { router.push(`${dayjs().year()}`) }}>올해</Button>
-                <Button onClick={() => { router.push(`/${CurrentYear + 1}`) }}>다음 해</Button>
+                <Button onClick={() => { router.push(`/${CurrentYear - 1}`) }}>
+                    <CaretLeftOutlined /> 지난 해
+                </Button>
+                <Button onClick={() => { router.push(`${dayjs().year()}`) }}>
+                    <CalendarOutlined /> 올해
+                </Button>
+
+                <Button onClick={() => { router.push(`/${CurrentYear + 1}`) }}>다음 해 <CaretRightOutlined /></Button>
             </S.ButtonsWrapper>
 
             <S.CalendarContainer>

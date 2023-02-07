@@ -1,22 +1,35 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import { Button } from 'antd'
+import { Button, DatePicker } from 'antd'
 import * as S from '@/styles/common_style'
+import { EditOutlined, LeftOutlined } from '@ant-design/icons'
+import dayjs from 'dayjs'
+import CustomDatePicker from '@/components/commons/CustomDatePicker'
 type Props = {}
 
 const Date = (props: Props) => {
 
     const router = useRouter()
+    const thisDay = dayjs(router.query.years + "-" + router.query.date)
+
+    if (!router.query) { return <></> }
+
     return (
         <>
 
-            <S.Title>{`${router.query.years}-${router.query.date}`}</S.Title>
-            <S.ButtonsWrapper>
+            <S.Title>
+                {thisDay.format("YYYY년 MM월 DD일")}
+                <S.TodayInfo>
+                    {thisDay.format("dddd")}
+                </S.TodayInfo>
+            </S.Title>
 
-                <Button onClick={(router.back)}>뒤로</Button>
-                <Button onClick={() => {
+            <S.ButtonsWrapper>
+                <Button onClick={() => router.push(`/${router.query.years}`)}><LeftOutlined /> 뒤로</Button>
+                <CustomDatePicker isCreate={false} />
+                <Button onClick={() =>
                     router.push(`/${router.query.years}/${router.query.date}/create`)
-                }}>작성</Button>
+                }><EditOutlined /> 작성</Button>
             </S.ButtonsWrapper>
         </>
     )

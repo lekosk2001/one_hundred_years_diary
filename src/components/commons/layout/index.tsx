@@ -5,6 +5,7 @@ import { Button, Input } from 'antd'
 import dayjs from 'dayjs'
 import Link from 'next/link'
 import React, { ChangeEvent, useState } from 'react'
+import TotalYears from '@/components/units/TotalYears/TotalYears'
 
 type Props = {
     children: JSX.Element
@@ -44,7 +45,6 @@ const Layout = (props: Props) => {
             >{props.children}</Main>
 
             <S.Aside>
-                <p>오늘 : {today.format("YYYY-MM-DD")}</p>
                 <p>내 생일 : </p>
                 <Input type='date' onChange={onchangeBirthDay} defaultValue={birthDay.format("YYYY-MM-DD")}></Input>
                 <div>
@@ -63,6 +63,7 @@ const Layout = (props: Props) => {
                     <p>{birthDay.add(100, "years").diff(today, "years")}년</p>
                     <p>을 더 살아갈 수 있습니다.</p>
                 </div>
+                <TotalYears></TotalYears>
             </S.Aside>
         </S.LayoutStyle>
     )
