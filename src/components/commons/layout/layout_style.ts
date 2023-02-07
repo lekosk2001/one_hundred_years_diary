@@ -2,6 +2,7 @@
 import styled from '@emotion/styled'
 
 export const LayoutStyle = styled.div`
+    flex-wrap: wrap;
     display: flex;        
     padding: 0px 20px;
     margin: 40px auto;
@@ -27,6 +28,7 @@ export const Aside = styled.aside`
 `
 
 export const LinkLists = styled.ul`
+    border-top: 1px solid #dae1e6;
     display: flex;
     flex-direction: column;
 `

@@ -85,20 +85,30 @@ export const CurrentYearMini = styled.p`
 `
 
 export const DayBlock = styled.div`
-    font-size: 11px;
-    line-height: 11px;
+    overflow: hidden;
     width: 40px;
     height: 40px;
     border-radius: 3px;
     border: 1px solid #dae1e6;
+    flex-direction: column;
     display: flex;
     padding: 5px;
     cursor: pointer;
     transition: 0.1s all ease;
     &:hover{
         background-color: #dae1e6;
-        text-decoration: underline;
+        p{text-decoration: underline;}
     }
+`
+
+export const Imoge = styled.h1`
+    font-size: 40px;
+    line-height: 25px;
+`
+
+export const DayBlockNumber = styled.p`
+    font-size: 11px;
+    line-height: 11px;
 `
 
 

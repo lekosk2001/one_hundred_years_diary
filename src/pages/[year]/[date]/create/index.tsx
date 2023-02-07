@@ -1,18 +1,18 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { useState } from 'react'
 import * as S from '@/styles/common_style'
 import styled from '@emotion/styled'
-import { Button, DatePicker, Input, Radio } from 'antd'
+import { Button, Input } from 'antd'
 import { useRouter } from 'next/router'
 import { CheckOutlined, LeftOutlined } from '@ant-design/icons'
-import dayjs, { Dayjs } from 'dayjs'
 import CustomDatePicker from '@/components/commons/CustomDatePicker'
 
 type Props = {}
 
-const create = (props: Props) => {
-    const router = useRouter()
-    const { TextArea } = Input;
+const { TextArea } = Input;
 
+const create = (props: Props) => {
+
+    const router = useRouter()
     const Form = styled.form`
         padding: 20px 0px;
         width: 100%;
@@ -57,16 +57,22 @@ const create = (props: Props) => {
         border-radius: 3px;
     `
     const Imoge = styled.h2`
-        
+    
     `
-
-    if (!router.query) { return <></> }
 
     const onClickMood = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         setMood(e.currentTarget.id)
     }
 
+    const [, setContents] = useState('')
+
+    const onChangeContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setContents(e.currentTarget.value)
+    }
+
+
+    if (!router.query) { return <></> }
     return (
         <>
             <S.Title>새 글 작성</S.Title>
@@ -124,13 +130,12 @@ const create = (props: Props) => {
                     </MoodContainer>
 
                 </MoodSection>
-
                 <TextArea
                     id="contents"
                     showCount
                     maxLength={1000}
                     style={{ height: 300, resize: 'none' }}
-                    // onChange={onChange}
+                    onChange={onChangeContents}
                     placeholder="오늘의 하루를 기록해주세요."
                 />
             </Form>

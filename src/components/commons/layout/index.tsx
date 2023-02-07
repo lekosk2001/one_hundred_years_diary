@@ -24,8 +24,10 @@ const Layout = (props: Props) => {
     return (
         <S.LayoutStyle>
             <S.Aside>
-                <S.Logo>📅</S.Logo>
-                <S.Title>100년 <br />다이어리</S.Title>
+                <Link href={"/"}>
+                    <S.Logo>📅</S.Logo>
+                    <S.Title>100년 <br />다이어리</S.Title>
+                </Link>
                 <S.Space />
                 <S.LinkLists>
                     <Link href={"/"}><S.LinkStyle><HomeOutlined /> 홈</S.LinkStyle></Link>
@@ -45,25 +47,16 @@ const Layout = (props: Props) => {
             >{props.children}</Main>
 
             <S.Aside>
-                <p>내 생일 : </p>
-                <Input type='date' onChange={onchangeBirthDay} defaultValue={birthDay.format("YYYY-MM-DD")}></Input>
+                <div>
+                    <p>내 생일 : </p>
+                    <Input type='date' onChange={onchangeBirthDay} defaultValue={birthDay.format("YYYY-MM-DD")}></Input>
+                </div>
                 <div>
                     <p>지금까지 : </p>
-                    <p>{today.diff(birthDay, "day")}일</p>
-                    <p>{today.diff(birthDay, "weeks")}주</p>
-                    <p>{today.diff(birthDay, "month")}월</p>
-                    <p>{today.diff(birthDay, "years")}년</p>
-                    <p>을 살아왔습니다.</p>
+                    <p>{today.diff(birthDay, "weeks")}주를 살아왔습니다.</p>
+                    <p>{birthDay.add(100, "years").diff(today, "weeks")}주를 더 살아갈 수 있습니다.</p>
                 </div>
-                <div>
-                    <p>남은수명 :</p>
-                    <p>{birthDay.add(100, "years").diff(today, "days")}일</p>
-                    <p>{birthDay.add(100, "years").diff(today, "weeks")}주</p>
-                    <p>{birthDay.add(100, "years").diff(today, "months")}월</p>
-                    <p>{birthDay.add(100, "years").diff(today, "years")}년</p>
-                    <p>을 더 살아갈 수 있습니다.</p>
-                </div>
-                <TotalYears></TotalYears>
+                <TotalYears />
             </S.Aside>
         </S.LayoutStyle>
     )

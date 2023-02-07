@@ -24,7 +24,8 @@ const Year = (props: Props) => {
         const allDays = []
 
         for (let index = 0; index < day.startOf("month").day(); index++) {
-            allDays.push(<S.DayBlockBlank key={day.format() + index} ></S.DayBlockBlank>)
+            allDays.push(<S.DayBlockBlank key={day.format() + index} >
+            </S.DayBlockBlank>)
         }
 
         for (let index = 0; index < Number(day.endOf("month").format("DD")); index++) {
@@ -35,10 +36,16 @@ const Year = (props: Props) => {
                 key={eachDay.format()}
                 style={{
                     backgroundColor: isToday ? "#ffffd9" : "",
-                    color: eachDay.day() === 0 ? "red" : "",
                 }}
                 onClick={() => onClickDate(eachDay)}
-            >{eachDay.date()}
+            >
+                <S.DayBlockNumber style={{
+                    color: eachDay.day() === 0 ? "red" : "",
+                }}>
+                    {eachDay.date()}
+                </S.DayBlockNumber>
+                {/* <S.Imoge>😰</S.Imoge> */}
+
             </S.DayBlock>)
         }
 
