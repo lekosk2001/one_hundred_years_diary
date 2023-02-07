@@ -1,8 +1,7 @@
+import * as S from './layout_style'
 import { Main } from '@/styles/home_style'
 import { BarsOutlined, DotChartOutlined, HomeOutlined, PlusCircleOutlined, SettingOutlined } from '@ant-design/icons'
-import styled from '@emotion/styled'
-import { Input } from 'antd'
-import Title from 'antd/es/typography/Title'
+import { Button, Input } from 'antd'
 import dayjs from 'dayjs'
 import Link from 'next/link'
 import React, { ChangeEvent, useState } from 'react'
@@ -13,75 +12,39 @@ type Props = {
 
 
 const Layout = (props: Props) => {
-    const LayoutStyle = styled.div`
-        display: flex;        
-        padding: 0px 20px;
-        margin: 40px auto;
-        gap: 20px;
-        justify-content: center;
-    `
-    const Title = styled.h1`
-        
-    `
-    const Logo = styled.div`
-    font-size: 36px;
-        
-    `
-
-    const Aside = styled.aside`
-        display: flex;
-        width: 120px;
-        flex-direction:column;
-        gap: 10px;
-        p{
-            font-size: 13px;
-        }
-    `
-
-    const LinkLists = styled.ul`
-        display: flex;
-        flex-direction: column;
-    `
-
-    const Space = styled.div`
-        height: 10px;
-    `
-
-    const LinkStyle = styled.li`
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        font-size: 13px;
-        list-style: none;
-        padding: 10px 0px;
-        border-bottom: 1px solid #dae1e6;
-    `
-
     const today = dayjs()
     const [birthDay, setBirthDay] = useState(dayjs("1993-9-1"))
-
 
     const onchangeBirthDay = (e: ChangeEvent<HTMLInputElement>) => {
         setBirthDay(dayjs(e.target.value))
     }
 
+    const [sizeToggle, setSizeToggle] = useState(false)
 
     return (
-        <LayoutStyle>
-            <Aside>
-                <Logo>📅</Logo>
-                <Title>100년 <br />다이어리</Title>
-                <Space />
-                <LinkLists>
-                    <Link href={"/"}><LinkStyle><HomeOutlined /> 홈</LinkStyle></Link>
-                    <Link href={"/feed"}><LinkStyle><BarsOutlined /> 피드</LinkStyle></Link>
-                    <Link href={"/create"}><LinkStyle><PlusCircleOutlined /> 작성</LinkStyle></Link>
-                    <Link href={"/statistics"}><LinkStyle><DotChartOutlined /> 통계</LinkStyle></Link>
-                    <Link href={"/setting"}><LinkStyle><SettingOutlined /> 설정</LinkStyle></Link>
-                </LinkLists>
-            </Aside>
-            <Main>{props.children}</Main>
-            <Aside>
+        <S.LayoutStyle>
+            <S.Aside>
+                <S.Logo>📅</S.Logo>
+                <S.Title>100년 <br />다이어리</S.Title>
+                <S.Space />
+                <S.LinkLists>
+                    <Link href={"/"}><S.LinkStyle><HomeOutlined /> 홈</S.LinkStyle></Link>
+                    <Link href={"/feed"}><S.LinkStyle><BarsOutlined /> 피드</S.LinkStyle></Link>
+                    <Link href={"/create"}><S.LinkStyle><PlusCircleOutlined /> 작성</S.LinkStyle></Link>
+                    <Link href={"/statistics"}><S.LinkStyle><DotChartOutlined /> 통계</S.LinkStyle></Link>
+                    <Link href={"/setting"}><S.LinkStyle><SettingOutlined /> 설정</S.LinkStyle></Link>
+                </S.LinkLists>
+                <S.Space />
+                <Button onClick={() => { setSizeToggle((prev) => !prev) }}>{sizeToggle ? "확대" : "축소"}</Button>
+            </S.Aside>
+            <Main style={{
+                width: sizeToggle ? "360px" : "768px"
+            }}
+
+            >{props.children}</Main>
+            <S.Aside>
+
+
                 <p>오늘 : {today.format("YYYY-MM-DD")}</p>
 
                 <p>내 생일 : </p>
@@ -103,8 +66,8 @@ const Layout = (props: Props) => {
                     <p>{birthDay.add(100, "years").diff(today, "years")}년</p>
                     <p>을 더 살아갈 수 있습니다.</p>
                 </div>
-            </Aside>
-        </LayoutStyle>
+            </S.Aside>
+        </S.LayoutStyle>
     )
 }
 

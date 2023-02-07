@@ -8,6 +8,7 @@ type Props = {}
 
 const Years = (props: Props) => {
 
+
     const router = useRouter()
     const CurrentYear = Number(router.query.years)
     if (!CurrentYear) { return <></> }
@@ -20,6 +21,10 @@ const Years = (props: Props) => {
 
     const Calendar = (day: Dayjs) => {
         const allDays = []
+
+        for (let index = 0; index < day.startOf("month").day(); index++) {
+            allDays.push(<S.DayBlockBlank key={day.format() + index} ></S.DayBlockBlank>)
+        }
 
         for (let index = 0; index < Number(day.endOf("month").format("DD")); index++) {
             const eachDay = dayjs(`${day.year()}-${day.month() + 1}-${1 + index}`)
@@ -36,7 +41,9 @@ const Years = (props: Props) => {
             </S.DayBlock>)
         }
 
-        if (allDays.length <= 28) { allDays.push(<S.DayBlock style={{ border: " 0px", cursor: "auto" }} />) }
+        if (allDays.length <= 28) {
+            allDays.push(<S.DayBlockBlank key={day.format() + "1"} />)
+        }
 
         return allDays
     }
@@ -45,7 +52,10 @@ const Years = (props: Props) => {
     const fullCalendar = []
     for (let index = 0; index < 12; index++) {
         fullCalendar.push(<S.MonthContainer key={index}>
+
+
             <S.MonthTitle>
+                <S.CurrentYearMini>{CurrentYear}</S.CurrentYearMini>
                 {index + 1}
             </S.MonthTitle>
             <S.DayBlockContainer>
@@ -58,7 +68,7 @@ const Years = (props: Props) => {
             <S.Title>{CurrentYear}년</S.Title>
             <S.ButtonsWrapper>
                 <Button onClick={() => { router.push(`/${CurrentYear - 1}`) }}>지난 해</Button>
-                <Button onClick={() => { router.push(`${dayjs().year()}`) }}>오늘</Button>
+                <Button onClick={() => { router.push(`${dayjs().year()}`) }}>올해</Button>
                 <Button onClick={() => { router.push(`/${CurrentYear + 1}`) }}>다음 해</Button>
             </S.ButtonsWrapper>
 

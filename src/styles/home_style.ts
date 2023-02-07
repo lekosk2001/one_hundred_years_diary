@@ -2,31 +2,39 @@ import styled from "@emotion/styled"
 
 export const Main = styled.main`
     background-color: #fff;
-    padding: 20px 20px;
+    padding: 30px 30px;
     display: flex;
     align-items: center;
     width: 768px;
     min-width: 360px;
     flex-direction: column;
     border: 1px solid #dae1e6;
-    gap: 10px;
+    overflow: hidden;
 `
 
+export const Title = styled.h1`
+    width: 100%;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #dae1e6;
+    text-align: center;
+`
 
 export const CalendarContainer = styled.section`
     display: flex;
     flex-wrap: wrap;
-    gap: 40px;
-    padding: 20px 0px;
+    gap: 30px;
+    padding: 30px 0px;
     justify-content: center;
+    transition: 0.1s all ease;
 
 `
 
 
 export const MonthContainer = styled.div`
     display: flex;
-    gap: 10px;
+    gap: 20px;
     min-height: 130px;
+    flex-wrap: wrap;
 
 `
 
@@ -35,8 +43,10 @@ export const ButtonsWrapper = styled.section`
     display: flex;
     justify-content: space-between;
     gap: 10px;
-    padding-bottom: 20px;
+    
     border-bottom: 1px solid #dae1e6;
+    padding-top: 15px;
+    padding-bottom: 15px;
 `
 
 export const DayBlockContainer = styled.div`
@@ -47,24 +57,43 @@ export const DayBlockContainer = styled.div`
     flex-wrap: wrap;
 `
 
-export const Title = styled.h1`
-`
-
 export const MonthTitle = styled.h4`
+    flex-direction: column;
     display: flex;
     justify-content: center;
+    align-items: center;
     min-width: 40px;
+    height: 40px;
+    border-radius: 3px;
+    border: 1px solid #dae1e6;
     
+`
+export const CurrentYearMini = styled.p`
+    font-weight: 400;
+    font-size: 9px;
+    line-height: 9px;
 `
 
 export const DayBlock = styled.div`
-    font-size: 13px;
+    font-size: 11px;
+    line-height: 11px;
     width: 40px;
     height: 40px;
     border-radius: 3px;
     border: 1px solid #dae1e6;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 5px;
     cursor: pointer;
+    transition: 0.1s all ease;
+    &:hover{
+        background-color: #dae1e6;
+        text-decoration: underline;
+    }
+`
+
+
+export const DayBlockBlank = styled.div`
+    width: 40px;
+    height: 40px;
+    border-radius: 3px;
 `
