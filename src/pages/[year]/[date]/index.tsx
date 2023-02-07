@@ -10,7 +10,7 @@ type Props = {}
 const Date = (props: Props) => {
 
     const router = useRouter()
-    const thisDay = dayjs(router.query.years + "-" + router.query.date)
+    const thisDay = dayjs(router.query.year + "-" + router.query.date)
 
     if (!router.query) { return <></> }
 
@@ -25,10 +25,10 @@ const Date = (props: Props) => {
             </S.Title>
 
             <S.ButtonsWrapper>
-                <Button onClick={() => router.push(`/${router.query.years}`)}><LeftOutlined /> 뒤로</Button>
+                <Button onClick={() => router.push(`/${router.query.year}`)}><LeftOutlined /> 뒤로</Button>
                 <CustomDatePicker isCreate={false} />
                 <Button onClick={() =>
-                    router.push(`/${router.query.years}/${router.query.date}/create`)
+                    router.push(`/${router.query.year}/${router.query.date}/create`)
                 }><EditOutlined /> 작성</Button>
             </S.ButtonsWrapper>
         </>

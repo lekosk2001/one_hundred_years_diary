@@ -14,11 +14,11 @@ const create = (props: Props) => {
     const { TextArea } = Input;
 
     const Form = styled.form`
-        padding: 30px 0px;
+        padding: 20px 0px;
         width: 100%;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 30px;
     `
     const MoodSection = styled.section`
     
@@ -71,7 +71,9 @@ const create = (props: Props) => {
         <>
             <S.Title>새 글 작성</S.Title>
             <S.ButtonsWrapper>
-                <Button onClick={() => router.push(`/${router.query.years}/${router.query.date}`)}><LeftOutlined /> 뒤로</Button>
+                <Button
+                    onClick={() => router.push(`/${router.query.year}/${router.query.date}`)}
+                ><LeftOutlined /> 뒤로</Button>
                 <CustomDatePicker isCreate={true} />
                 <Button type="primary"><CheckOutlined /> 등록</Button>
             </S.ButtonsWrapper>

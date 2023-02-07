@@ -13,12 +13,13 @@ const CustomDatePicker = (props: Props) => {
 
     const onChangeDate = (date: any) => {
         if (date) {
-            console.log(dayjs(date).format("YYYY/MM-DD"))
             router.push(`/${dayjs(date).format("YYYY/MM-DD")}${props.isCreate ? "/create" : ""}`)
         }
     }
 
-    const thisDay = dayjs(router.query.years + "-" + router.query.date)
+    const thisDay = dayjs(router.query.year + "-" + router.query.date)
+
+    if (!router.query) { return <></> }
 
     return (
         <DatePicker

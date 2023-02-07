@@ -7,11 +7,11 @@ import { CalendarOutlined, CaretLeftOutlined, CaretRightOutlined, ClockCircleOut
 
 type Props = {}
 
-const Years = (props: Props) => {
+const Year = (props: Props) => {
 
     dayjs.locale('ko');
     const router = useRouter()
-    const CurrentYear = Number(router.query.years)
+    const CurrentYear = Number(router.query.year)
     if (!CurrentYear) { return <></> }
 
     const onClickDate = (day: Dayjs) => {
@@ -97,4 +97,4 @@ const Years = (props: Props) => {
     )
 }
 
-export default Years
+export default Year
