@@ -12,6 +12,8 @@ const Date = (props: Props) => {
 
             <S.Title>{`${router.query.years}-${router.query.date}`}</S.Title>
             <S.ButtonsWrapper>
+
+                <Button onClick={(router.back)}>뒤로</Button>
                 <Button onClick={() => {
                     router.push(`/${router.query.years}/${router.query.date}/create`)
                 }}>작성</Button>
