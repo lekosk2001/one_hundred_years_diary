@@ -3,7 +3,7 @@ import { Button } from 'antd'
 import dayjs, { Dayjs } from 'dayjs'
 import { useRouter } from 'next/router'
 import 'dayjs/locale/ko';
-import { CalendarOutlined, CaretLeftOutlined, CaretRightOutlined, ClockCircleOutlined, LeftOutlined, PicLeftOutlined, RightOutlined } from '@ant-design/icons';
+import { CalendarOutlined, CaretLeftOutlined, CaretRightOutlined } from '@ant-design/icons';
 
 type Props = {}
 

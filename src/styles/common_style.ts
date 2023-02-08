@@ -40,6 +40,31 @@ export const CalendarContainer = styled.section`
 `
 
 
+export const DiaryCardList = styled.section`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 0px;
+`
+
+
+export const CardHeader = styled.div`
+    width: 100%;
+    display: flex;
+    padding-bottom: 5px;
+    justify-content: space-between;
+    border-bottom: 1px solid #dae1e6;
+    align-items:center;
+`
+
+export const CardContents = styled.p`
+    margin-top: 10px;
+    min-height: 40px;
+    overflow: hidden;
+`
+
+
 export const MonthContainer = styled.div`
     display: flex;
     gap: 20px;

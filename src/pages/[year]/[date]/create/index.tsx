@@ -25,7 +25,6 @@ const create = () => {
 
     const onChangeContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setContents(e.currentTarget.value)
-        console.log(contents)
     };
 
     const onSubmit = async () => {
@@ -36,10 +35,8 @@ const create = () => {
                 date: thisDay.format("YYYY-MM-DD"),
                 createdAt: dayjs().format()
             });
-            console.log("Document written with ID: ", docRef.id);
             router.push(`/${router.query.year}/${router.query.date}`)
         } catch (e) {
-            console.error("Error adding document: ", e);
         }
     }
 
