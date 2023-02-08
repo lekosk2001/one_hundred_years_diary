@@ -1,4 +1,4 @@
-import * as S from './layout_style'
+import * as S from './style'
 import { Main } from '@/styles/common_style'
 import { BarsOutlined, DotChartOutlined, HomeOutlined, PlusCircleOutlined, SettingOutlined } from '@ant-design/icons'
 import { Button, Input } from 'antd'

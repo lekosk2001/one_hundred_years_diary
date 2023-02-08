@@ -19,7 +19,7 @@ const CustomDatePicker = (props: Props) => {
 
     const thisDay = dayjs(router.query.year + "-" + router.query.date)
 
-    if (!router.query) { return <></> }
+    if (!router.query.year) { return <></> }
 
     return (
         <DatePicker

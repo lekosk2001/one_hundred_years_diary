@@ -1,78 +1,50 @@
 import React, { useState } from 'react'
 import * as S from '@/styles/common_style'
-import styled from '@emotion/styled'
+import * as C from './style'
 import { Button, Input } from 'antd'
 import { useRouter } from 'next/router'
 import { CheckOutlined, LeftOutlined } from '@ant-design/icons'
 import CustomDatePicker from '@/components/commons/CustomDatePicker'
-
-type Props = {}
+import { collection, addDoc } from "firebase/firestore";
+import { db } from '@/pages/_app'
+import dayjs from 'dayjs'
 
 const { TextArea } = Input;
 
-const create = (props: Props) => {
+const create = () => {
+    const router = useRouter();
+    const [mood, setMood] = useState('보통');
+    const [contents, setContents] = useState('');
+    const thisDay = dayjs(router.query.year + "-" + router.query.date);
 
-    const router = useRouter()
-    const Form = styled.form`
-        padding: 20px 0px;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-    `
-    const MoodSection = styled.section`
-    
-    justify-content: center;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        label{
-            text-align: center;
-            font-size: 13px;
-            color: gray;
-        }
-    `
-
-    const MoodContainer = styled.div`    
-        justify-content: center;
-        display: flex;
-        gap: 5px;
-        flex-wrap: wrap;
-    `
-
-    const [mood, setMood] = useState('보통')
-
-    const Mood = styled.button`
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 50px;
-        height: 50px;
-        background-color: ${(props) => mood === props.id ? "#1677ff" : "#fff"} ;
-        color: ${(props) => mood === props.id ? "#fff" : "default"};
-        border: 1px solid ${(props) => mood === props.id ? "#1677ff" : "#dae1e6"} ;
-        font-size: 11px;
-        cursor: pointer;
-        border-radius: 3px;
-    `
-    const Imoge = styled.h2`
-    
-    `
 
     const onClickMood = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         setMood(e.currentTarget.id)
-    }
-
-    const [, setContents] = useState('')
+    };
 
     const onChangeContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setContents(e.currentTarget.value)
+        console.log(contents)
+    };
+
+    const onSubmit = async () => {
+        try {
+            const docRef = await addDoc(collection(db, "Diary"), {
+                mood,
+                contents,
+                date: thisDay.format("YYYY-MM-DD"),
+                createdAt: dayjs().format()
+            });
+            console.log("Document written with ID: ", docRef.id);
+            router.push(`/${router.query.year}/${router.query.date}`)
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
     }
 
-
     if (!router.query) { return <></> }
+
     return (
         <>
             <S.Title>새 글 작성</S.Title>
@@ -81,55 +53,55 @@ const create = (props: Props) => {
                     onClick={() => router.push(`/${router.query.year}/${router.query.date}`)}
                 ><LeftOutlined /> 뒤로</Button>
                 <CustomDatePicker isCreate={true} />
-                <Button type="primary"><CheckOutlined /> 등록</Button>
+                <Button type="primary" onClick={onSubmit}><CheckOutlined /> 등록</Button>
             </S.ButtonsWrapper>
-            <Form>
-                <MoodSection>
+            <C.Form>
+                <C.MoodSection>
                     <label>오늘은 어떠셨나요?</label>
-                    <MoodContainer>
-                        <Mood onClick={onClickMood} id="보통">
-                            <Imoge>😑</Imoge>
+                    <C.MoodContainer>
+                        <C.Mood onClick={onClickMood} id="보통" mood={mood}>
+                            <C.Imoge>😑</C.Imoge>
                             보통
-                        </Mood>
-                        <Mood onClick={onClickMood} id="뿌듯">
-                            <Imoge>😊</Imoge>
+                        </C.Mood>
+                        <C.Mood onClick={onClickMood} id="뿌듯" mood={mood}>
+                            <C.Imoge>😊</C.Imoge>
                             뿌듯
-                        </Mood>
-                        <Mood onClick={onClickMood} id="행복">
-                            <Imoge>😄</Imoge>
+                        </C.Mood>
+                        <C.Mood onClick={onClickMood} id="행복" mood={mood}>
+                            <C.Imoge>😄</C.Imoge>
                             행복
-                        </Mood>
-                        <Mood onClick={onClickMood} id="설렘">
-                            <Imoge>🥰</Imoge>
+                        </C.Mood>
+                        <C.Mood onClick={onClickMood} id="설렘" mood={mood}>
+                            <C.Imoge>🥰</C.Imoge>
                             설렘
-                        </Mood>
-                        <Mood onClick={onClickMood} id="평온">
-                            <Imoge>😌</Imoge>
+                        </C.Mood>
+                        <C.Mood onClick={onClickMood} id="평온" mood={mood}>
+                            <C.Imoge>😌</C.Imoge>
                             평온
-                        </Mood>
-                        <Mood onClick={onClickMood} id="슬픔">
-                            <Imoge>😭</Imoge>
+                        </C.Mood>
+                        <C.Mood onClick={onClickMood} id="슬픔" mood={mood}>
+                            <C.Imoge>😭</C.Imoge>
                             슬픔
-                        </Mood>
-                        <Mood onClick={onClickMood} id="피곤">
-                            <Imoge>😩</Imoge>
+                        </C.Mood>
+                        <C.Mood onClick={onClickMood} id="피곤" mood={mood}>
+                            <C.Imoge>😩</C.Imoge>
                             피곤
-                        </Mood>
-                        <Mood onClick={onClickMood} id="불안">
-                            <Imoge>😰</Imoge>
+                        </C.Mood>
+                        <C.Mood onClick={onClickMood} id="불안" mood={mood}>
+                            <C.Imoge>😰</C.Imoge>
                             불안
-                        </Mood>
-                        <Mood onClick={onClickMood} id="우울">
-                            <Imoge>😔</Imoge>
+                        </C.Mood>
+                        <C.Mood onClick={onClickMood} id="우울" mood={mood}>
+                            <C.Imoge>😔</C.Imoge>
                             우울
-                        </Mood>
-                        <Mood onClick={onClickMood} id="화남">
-                            <Imoge>😡</Imoge>
+                        </C.Mood>
+                        <C.Mood onClick={onClickMood} id="화남" mood={mood}>
+                            <C.Imoge>😡</C.Imoge>
                             화남
-                        </Mood>
-                    </MoodContainer>
+                        </C.Mood>
+                    </C.MoodContainer>
 
-                </MoodSection>
+                </C.MoodSection>
                 <TextArea
                     id="contents"
                     showCount
@@ -138,8 +110,7 @@ const create = (props: Props) => {
                     onChange={onChangeContents}
                     placeholder="오늘의 하루를 기록해주세요."
                 />
-            </Form>
-
+            </C.Form>
         </>
     )
 }

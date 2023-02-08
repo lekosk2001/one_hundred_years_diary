@@ -72,15 +72,15 @@ const Year = (props: Props) => {
     }
     return (
         <>
+            <S.Title>
+                {CurrentYear + "년"}
 
-            <S.Title>{CurrentYear + "년"}
                 {CurrentYear === today.year() && <S.TodayInfo>
                     {"오늘은 " + today.format("YYYY년 MM월 DD일 dddd입니다.")}
                 </S.TodayInfo>}
                 {CurrentYear < today.year() && <S.TodayInfo>
                     {"오늘로부터 " + (today.year() - CurrentYear) + "년 전입니다."}
                 </S.TodayInfo>}
-
                 {CurrentYear > today.year() && <S.TodayInfo>
                     {"오늘로부터 " + (CurrentYear - today.year()) + "년 후입니다."}
                 </S.TodayInfo>}
