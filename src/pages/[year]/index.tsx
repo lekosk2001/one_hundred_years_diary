@@ -4,15 +4,37 @@ import dayjs, { Dayjs } from 'dayjs'
 import { useRouter } from 'next/router'
 import 'dayjs/locale/ko';
 import { CalendarOutlined, CaretLeftOutlined, CaretRightOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
+import { collection, DocumentData, getDocs, orderBy, query } from 'firebase/firestore';
+import { db } from '../_app';
+import { moodImoge } from '@/commons/moodImoge';
 
-type Props = {}
+dayjs.locale('ko');
+interface Data {
+    contents: string
+    createdAt: string
+    mood: string
+    date: string
+    id: string
+}
 
-const Year = (props: Props) => {
+const Year = () => {
 
-    dayjs.locale('ko');
+    const [diaryData, setDiaryData] = useState<Data[]>([])
     const router = useRouter()
     const CurrentYear = Number(router.query.year)
-    if (!CurrentYear) { return <></> }
+
+    const petchDiary = async () => {
+        const dataArray: Data[] = []
+        const result = await getDocs(query(collection(db, "Diary"), orderBy("createdAt", "desc")));
+
+        result.docs.map((doc: DocumentData) => { dataArray.push({ ...doc.data(), id: doc.id }) });
+        setDiaryData(dataArray)
+    }
+
+    useEffect(() => {
+        petchDiary()
+    }, [])
 
     const onClickDate = (day: Dayjs) => {
         router.push(`/${day.format("YYYY")}/${day.format("MM-DD")}`)
@@ -44,7 +66,7 @@ const Year = (props: Props) => {
                 }}>
                     {eachDay.date()}
                 </S.DayBlockNumber>
-                {/* <S.Imoge>😰</S.Imoge> */}
+                {<S.Imoge>{moodImoge(diaryData.filter((diary) => { return diary.date === eachDay.format("YYYY-MM-DD") })[0]?.mood)}</S.Imoge>}
 
             </S.DayBlock>)
         }
@@ -70,6 +92,10 @@ const Year = (props: Props) => {
             </S.MonthContainer>
         )
     }
+
+
+    if (!CurrentYear) { return <></> }
+
     return (
         <>
             <S.Title>

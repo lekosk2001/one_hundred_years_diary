@@ -58,6 +58,15 @@ export const CardHeader = styled.div`
     align-items:center;
 `
 
+export const CardMood =styled.h4`
+font-size: 15px;
+`
+
+export const CardTime = styled.p`
+    color: gray;
+    font-size: 13px;
+`
+
 export const CardContents = styled.p`
     margin-top: 10px;
     min-height: 40px;

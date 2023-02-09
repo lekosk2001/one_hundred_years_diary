@@ -9,6 +9,7 @@ import 'dayjs/locale/ko';
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { collection, DocumentData, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from '@/pages/_app'
+import { moodImoge } from '@/commons/moodImoge'
 
 dayjs.locale('ko');
 dayjs.extend(relativeTime)
@@ -18,37 +19,27 @@ interface Data {
     createdAt: string
     mood: string
     date: string
+    id: string
 }
 
 const Date = () => {
 
-    const moodImoge = (mood: string) => {
-        if (mood === "보통") { return "😑" }
-        if (mood === "뿌듯") { return "😊" }
-        if (mood === "행복") { return "😄" }
-        if (mood === "설렘") { return "🥰" }
-        if (mood === "평온") { return "😌" }
-        if (mood === "슬픔") { return "😭" }
-        if (mood === "피곤") { return "😩" }
-        if (mood === "불안") { return "😰" }
-        if (mood === "우울") { return "😔" }
-        if (mood === "화남") { return "😡" }
-    }
+
 
     const router = useRouter()
     const thisDay = dayjs(router.query.year + "-" + router.query.date)
     const [diaryData, setDiaryData] = useState<Data[]>([])
 
-    const getDiary = async () => {
+    const petchDiary = async () => {
         const dataArray: Data[] = []
         const result = await getDocs(query(collection(db, "Diary"), orderBy("createdAt", "desc")));
 
-        result.docs.map((doc: DocumentData) => { dataArray.push(doc.data()) });
+        result.docs.map((doc: DocumentData) => { dataArray.push({ ...doc.data(), id: doc.id }) });
         setDiaryData(dataArray.filter((doc) => doc.date === thisDay.format("YYYY-MM-DD")))
     }
 
     useEffect(() => {
-        getDiary()
+        petchDiary()
     }, [])
 
     if (!router.query) { return <></> }
@@ -71,10 +62,10 @@ const Date = () => {
             </S.ButtonsWrapper>
 
             <S.DiaryCardList>
-                {diaryData.map((el, i) => {
+                {diaryData.map((diary) => {
                     return (
                         <Card
-                            key={i}
+                            key={diary.id}
                             style={{
                                 width: "100%",
                                 border: "1px solid #dae1e6",
@@ -83,11 +74,13 @@ const Date = () => {
                             hoverable={true}
                         >
                             <S.CardHeader>
-                                <h3>{`${moodImoge(el.mood)} ${el.mood}`}</h3>
-                                <p>{dayjs(el.createdAt).fromNow()}</p>
+                                <S.CardMood>{`${moodImoge(diary.mood)} ${diary.mood}`}</S.CardMood>
+                                <S.CardTime>
+                                    {`${dayjs(diary.createdAt).format("YYYY.MM.DD. HH:mm")} (${dayjs(diary.createdAt).fromNow()})`}
+                                </S.CardTime>
                             </S.CardHeader>
                             <S.CardContents>
-                                {el.contents}
+                                {diary.contents}
                             </S.CardContents>
                         </Card>
                     )

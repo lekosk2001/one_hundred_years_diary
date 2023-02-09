@@ -29,7 +29,7 @@ const create = () => {
 
     const onSubmit = async () => {
         try {
-            const docRef = await addDoc(collection(db, "Diary"), {
+            await addDoc(collection(db, "Diary"), {
                 mood,
                 contents,
                 date: thisDay.format("YYYY-MM-DD"),
