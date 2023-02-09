@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import * as S from '@/styles/common_style'
 import * as C from './style'
 import { Button, Input } from 'antd'
@@ -6,8 +6,9 @@ import { useRouter } from 'next/router'
 import { CheckOutlined, LeftOutlined } from '@ant-design/icons'
 import CustomDatePicker from '@/components/commons/CustomDatePicker'
 import { collection, addDoc } from "firebase/firestore";
-import { db } from '@/pages/_app'
+import { db, storage } from '@/pages/_app'
 import dayjs from 'dayjs'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 
 const { TextArea } = Input;
 
@@ -15,8 +16,11 @@ const create = () => {
     const router = useRouter();
     const [mood, setMood] = useState('보통');
     const [contents, setContents] = useState('');
-    const thisDay = dayjs(router.query.year + "-" + router.query.date);
+    const [imageUrl, setImageUrl] = useState('')
 
+    if (!router.isReady) { return <></> }
+
+    const thisDay = dayjs(router.query.year + "-" + router.query.date);
 
     const onClickMood = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
@@ -27,9 +31,22 @@ const create = () => {
         setContents(e.currentTarget.value)
     };
 
+    const onChangeUpload = (event: ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files === null) return;
+        const imageRef = ref(storage, `images/${event.target.files[0].name}`)
+        uploadBytes(imageRef, event.target.files[0])
+            .then((snapshot) => {
+                getDownloadURL(snapshot.ref)
+                    .then((url: string) => {
+                        setImageUrl(url)
+                    });
+            });
+    };
+
     const onSubmit = async () => {
         try {
             await addDoc(collection(db, "Diary"), {
+                imageUrl,
                 mood,
                 contents,
                 date: thisDay.format("YYYY-MM-DD"),
@@ -40,7 +57,6 @@ const create = () => {
         }
     }
 
-    if (!router.query) { return <></> }
 
     return (
         <>
@@ -107,6 +123,7 @@ const create = () => {
                     onChange={onChangeContents}
                     placeholder="오늘의 하루를 기록해주세요."
                 />
+                <Input type='file' onChange={onChangeUpload} />
             </C.Form>
         </>
     )

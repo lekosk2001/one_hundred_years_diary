@@ -8,8 +8,8 @@ interface Props {
 }
 
 const CustomDatePicker = (props: Props) => {
-
     const router = useRouter()
+    if (!router.isReady) { return <></> }
 
     const onChangeDate = (date: any) => {
         if (date) {
@@ -18,8 +18,6 @@ const CustomDatePicker = (props: Props) => {
     }
 
     const thisDay = dayjs(router.query.year + "-" + router.query.date)
-
-    if (!router.query.year) { return <></> }
 
     return (
         <DatePicker

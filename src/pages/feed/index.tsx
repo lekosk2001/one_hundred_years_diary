@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { Button, Card, Input } from 'antd'
+import { Button, Card, Input, Image } from 'antd'
 import * as S from '@/styles/common_style'
 import { EditOutlined } from '@ant-design/icons'
 import dayjs from 'dayjs'
@@ -20,7 +20,9 @@ interface Data {
     mood: string
     date: string
     id: string
+    imageUrl: string
 }
+
 
 const Feed = () => {
     const today = dayjs()
@@ -76,6 +78,7 @@ const Feed = () => {
                                     {`${dayjs(diary.createdAt).format("YYYY.MM.DD. HH:mm")} (${dayjs(diary.createdAt).fromNow()})`}
                                 </S.CardTime>
                             </S.CardHeader>
+                            <Image style={{ "maxHeight": "656px" }} src={diary.imageUrl}></Image>
                             <S.CardContents>
                                 {diary.contents}
                             </S.CardContents>
