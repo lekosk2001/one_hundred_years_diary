@@ -1,4 +1,4 @@
-import Layout from '@/components/commons/layout'
+import Layout from '@/components/commons/layouts/Layout'
 import { firebaseConfig } from '@/firebase/firebaseConfig';
 import '@/styles/globals.css'
 import { initializeApp } from 'firebase/app';
@@ -19,7 +19,6 @@ export default function App({ Component, pageProps }: AppProps) {
 			</Head>
 			<Layout>
 				<Component {...pageProps} />
-
 			</Layout>
 		</>
 	)

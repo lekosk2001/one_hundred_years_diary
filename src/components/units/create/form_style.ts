@@ -1,11 +1,18 @@
 import styled from "@emotion/styled"
 
-export const Form = styled.form`
+export const FormStyle = styled.form`
     padding: 20px 0px;
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 30px;
+`
+
+export const ImageUploadSection = styled.section`
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    flex-direction: column;
 `
 
 export const MoodSection = styled.section`

@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import Year from './[year]';
 
 export default function Home() {
 	const router = useRouter()
@@ -11,8 +10,8 @@ export default function Home() {
 	}, [])
 
 	return (
-		<>
-			<Year />
-		</>
+		<div>
+			로그인
+		</div>
 	)
 }

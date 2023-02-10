@@ -1,9 +1,13 @@
 import Form from '@/components/units/create/form'
 import React from 'react'
 
-const index = () => {
+type Props = {
+    id: string
+}
+
+const index = (props: Props) => {
     return (
-        <Form isEdit={false} id={null} />
+        <Form isEdit={true} id={props.id} />
     )
 }
 
