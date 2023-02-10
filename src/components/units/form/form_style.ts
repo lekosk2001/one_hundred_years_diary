@@ -5,7 +5,7 @@ export const FormStyle = styled.form`
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
 `
 
 export const ImageUploadSection = styled.section`

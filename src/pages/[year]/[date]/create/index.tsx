@@ -1,4 +1,4 @@
-import Form from '@/components/units/create/form'
+import Form from '@/components/units/form/form'
 import React from 'react'
 
 const index = () => {

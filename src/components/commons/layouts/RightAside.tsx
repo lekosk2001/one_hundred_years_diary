@@ -87,11 +87,11 @@ const RightAside = (props: Props) => {
                 <p>{props.today.diff(props.birthDay, "weeks")}주를 살아왔습니다.</p>
                 <p>{props.birthDay.add(100, "years").diff(props.today, "weeks")}주를 더 살아갈 수 있습니다.</p>
             </S.Birthday>
-            {/* <S.TotalYearsSection>
+            <S.TotalYearsSection>
                 <S.YearBlockContainer>
                     {yearBlocks}
                 </S.YearBlockContainer>
-            </S.TotalYearsSection> */}
+            </S.TotalYearsSection>
         </>
     )
 }

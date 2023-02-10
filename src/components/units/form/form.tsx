@@ -132,6 +132,13 @@ const create = (props: Props) => {
                     </C.MoodContainer>
 
                 </C.MoodSection>
+
+                <C.ImageUploadSection>
+                    <Button onClick={onClickUploadImage} style={{ width: "100%" }}>이미지 업로드</Button>
+                    <input ref={imageRef} type='file' onChange={onChangeUpload} style={{ display: "none" }} />
+                    {imageUrl && <img src={imageUrl}></img>}
+                </C.ImageUploadSection>
+
                 <TextArea
                     id="contents"
                     showCount
@@ -140,11 +147,7 @@ const create = (props: Props) => {
                     onChange={onChangeContents}
                     placeholder="오늘의 하루를 기록해주세요."
                 />
-                <C.ImageUploadSection>
-                    <Button onClick={onClickUploadImage} style={{ width: "100%" }}>이미지 업로드</Button>
-                    <input ref={imageRef} type='file' onChange={onChangeUpload} style={{ display: "none" }} />
-                    {imageUrl && <img src={imageUrl}></img>}
-                </C.ImageUploadSection>
+
 
             </C.FormStyle>
         </>

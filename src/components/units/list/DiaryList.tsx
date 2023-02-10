@@ -62,7 +62,7 @@ const Date = (props: Props) => {
                     return (
                         <Card
                             onClick={() =>
-                                router.push(`/${router.query.year}/${router.query.date}/${diary.id}/edit`)
+                                router.push(`/${dayjs(diary.date).format("YYYY/MM-DD")}/${diary.id}/edit`)
                             }
                             key={diary.id}
                             style={{
