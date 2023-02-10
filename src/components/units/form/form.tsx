@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useRef, useState } from 'react'
 import * as C from './form_style'
-import { Button, Input } from 'antd'
+import { Button, Input, Modal } from 'antd'
 import { useRouter } from 'next/router'
 import { CheckOutlined, LeftOutlined } from '@ant-design/icons'
 import CustomDatePicker from '@/components/commons/CustomDatePicker'
@@ -61,6 +61,9 @@ const create = (props: Props) => {
     }
 
     const onSubmit = async () => {
+
+        if (!contents) { Modal.error({ content: "내용이 없습니다." }); return; }
+
         try {
             await addDoc(collection(db, "Diary"), {
                 imageUrl,
@@ -76,7 +79,7 @@ const create = (props: Props) => {
 
     return (
         <>
-            <PageTitle title={"새 글 작성"} sub={thisDay.format("YYYY-MM-DD dddd")} />
+            <PageTitle title={props.isEdit ? "수정" : "새 글 작성"} sub={thisDay.format("YYYY-MM-DD dddd")} />
             <ButtonsWrapper>
                 <Button
                     onClick={() => router.push(`/${router.query.year}/${router.query.date}`)}

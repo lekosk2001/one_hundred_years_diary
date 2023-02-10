@@ -78,7 +78,7 @@ const Date = (props: Props) => {
                                     {`${dayjs(diary.createdAt).format("YYYY.MM.DD. HH:mm")} (${dayjs(diary.createdAt).fromNow()})`}
                                 </S.CardTime>
                             </S.CardHeader>
-                            <Image style={{ "maxHeight": "656px" }} src={diary.imageUrl}></Image>
+                            <S.CardImage src={diary.imageUrl} />
                             <S.CardContents>
                                 {diary.contents}
                             </S.CardContents>
