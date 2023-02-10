@@ -12,6 +12,12 @@ export const Main = styled.main`
     overflow: hidden;
 `
 
+export const ImageUploadSection = styled.section`
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    flex-direction: column;
+`
 
 export const TodayInfo = styled.p`
 font-size: 13px;

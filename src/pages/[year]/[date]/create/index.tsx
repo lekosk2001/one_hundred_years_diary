@@ -1,7 +1,7 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useRef, useState } from 'react'
 import * as S from '@/styles/common_style'
 import * as C from './style'
-import { Button, Input } from 'antd'
+import { Button, Input, Image } from 'antd'
 import { useRouter } from 'next/router'
 import { CheckOutlined, LeftOutlined } from '@ant-design/icons'
 import CustomDatePicker from '@/components/commons/CustomDatePicker'
@@ -9,6 +9,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { db, storage } from '@/pages/_app'
 import dayjs from 'dayjs'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { imageValidationCheck } from '@/commons/imageValidationCheck'
 
 const { TextArea } = Input;
 
@@ -17,6 +18,7 @@ const create = () => {
     const [mood, setMood] = useState('보통');
     const [contents, setContents] = useState('');
     const [imageUrl, setImageUrl] = useState('')
+    const imageRef = useRef<HTMLInputElement>(null);
 
     if (!router.isReady) { return <></> }
 
@@ -32,16 +34,23 @@ const create = () => {
     };
 
     const onChangeUpload = (event: ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files === null) return;
-        const imageRef = ref(storage, `images/${event.target.files[0].name}`)
+
+        if (!event.target.files?.[0]) { setImageUrl(''); return; }
+        if (!imageValidationCheck(event.target.files[0])) { setImageUrl(''); return; }
+
+        const imageRef = ref(storage, `images/${event.target.files?.[0]?.name}`)
         uploadBytes(imageRef, event.target.files[0])
             .then((snapshot) => {
                 getDownloadURL(snapshot.ref)
                     .then((url: string) => {
-                        setImageUrl(url)
+                        setImageUrl(url);
                     });
             });
     };
+
+    const onClickUploadImage = () => {
+        imageRef.current?.click();
+    }
 
     const onSubmit = async () => {
         try {
@@ -56,7 +65,6 @@ const create = () => {
         } catch (e) {
         }
     }
-
 
     return (
         <>
@@ -123,7 +131,12 @@ const create = () => {
                     onChange={onChangeContents}
                     placeholder="오늘의 하루를 기록해주세요."
                 />
-                <Input type='file' onChange={onChangeUpload} />
+                <S.ImageUploadSection>
+                    <Button onClick={onClickUploadImage} style={{ width: "100%" }}>이미지 업로드</Button>
+                    <input ref={imageRef} type='file' onChange={onChangeUpload} style={{ display: "none" }} />
+                    {imageUrl && <Image style={{ "maxHeight": "656px" }} src={imageUrl}></Image>}
+                </S.ImageUploadSection>
+
             </C.Form>
         </>
     )

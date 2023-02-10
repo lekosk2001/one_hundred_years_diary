@@ -41,8 +41,6 @@ const Feed = () => {
         petchDiary()
     }, [])
 
-    if (!router.query) { return <></> }
-
     return (
         <>
             <S.Title>
@@ -54,7 +52,6 @@ const Feed = () => {
 
             <S.ButtonsWrapper>
                 <Input type='search'></Input>
-                <CustomDatePicker isCreate={false} />
                 <Button onClick={() =>
                     router.push(`/${today.year()}/${today.format("MM-DD")}/create`)
                 }><EditOutlined /> 작성</Button>
