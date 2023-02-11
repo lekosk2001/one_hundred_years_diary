@@ -7,7 +7,7 @@ import dayjs, { Dayjs } from 'dayjs'
 import CustomDatePicker from '@/components/commons/CustomDatePicker'
 import 'dayjs/locale/ko';
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { collection, DocumentData, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { collection, DocumentData, getDocs, limit, orderBy, query, where } from "firebase/firestore";
 import { db } from '@/pages/_app'
 import { moodImoge } from '@/utils/moodImoge'
 import PageTitle from '@/components/commons/PageTitle'
@@ -31,18 +31,29 @@ const Date = (props: Props) => {
 
         const dataArray: Data[] = []
 
-        try {
-            const result = await getDocs(query(collection(db, "Diary"), orderBy("createdAt", "desc"), limit(10)));
-            result.docs.map((doc: DocumentData) => { dataArray.push({ ...doc.data(), id: doc.id }) });
-            setDiaryData(props.thisDay ? dataArray.filter((doc) => props.thisDay ? doc.date === props.thisDay.format("YYYY-MM-DD") : doc) : dataArray)
-        } catch (error) {
-            Modal.error({ content: "에러" })
+        if (props.thisDay) {
+            try {
+                const result = await getDocs(query(collection(db, "Diary"), where("date", "==", props.thisDay.format("YYYY-MM-DD")), orderBy("createdAt", "desc"), limit(10)));
+                result.docs.map((doc: DocumentData) => { dataArray.push({ ...doc.data(), id: doc.id }) });
+                setDiaryData(dataArray)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        else {
+            try {
+                const result = await getDocs(query(collection(db, "Diary"), orderBy("createdAt", "desc"), limit(10)));
+                result.docs.map((doc: DocumentData) => { dataArray.push({ ...doc.data(), id: doc.id }) });
+                setDiaryData(dataArray)
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 
     useEffect(() => {
         petchDiary()
-    }, [])
+    }, [props.thisDay])
 
     if (props.thisDay && !router.query.year || props.thisDay && !router.query.date) { return <></> }
 
@@ -84,7 +95,7 @@ const Date = (props: Props) => {
                                     {`${dayjs(diary.createdAt).format("YYYY.MM.DD. HH:mm")} (${dayjs(diary.createdAt).fromNow()})`}
                                 </S.CardTime>
                             </S.CardHeader>
-                            <S.CardImage src={diary.imageUrl} />
+                            {diary.imageUrl && <S.CardImage src={diary.imageUrl} />}
                             <S.CardContents>
                                 {diary.contents}
                             </S.CardContents>
