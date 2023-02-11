@@ -12,6 +12,14 @@ export const CardImage = styled.img`
     width: "100%";
 `
 
+export const NoDiaryText = styled.p`
+font-size: 13px;
+display: flex;
+justify-content: center;
+align-items: center;
+color: grey;
+
+`
 
 export const CardHeader = styled.div`
     width: 100%;

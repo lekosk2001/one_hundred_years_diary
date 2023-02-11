@@ -9,7 +9,7 @@ interface Props {
 
 const CustomDatePicker = (props: Props) => {
     const router = useRouter()
-    if (!router.isReady) { return <></> }
+    if (!router.query.year || !router.query.date) { return <></> }
 
     const onChangeDate = (date: any) => {
         if (date) {

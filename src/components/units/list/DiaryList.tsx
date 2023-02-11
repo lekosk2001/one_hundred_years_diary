@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import { Button, Card, Image, Input } from 'antd'
+import { Button, Card, Input } from 'antd'
 import * as S from './DiaryList_style'
 import { EditOutlined, LeftOutlined } from '@ant-design/icons'
 import dayjs, { Dayjs } from 'dayjs'
@@ -36,11 +36,8 @@ const Date = (props: Props) => {
         setDiaryData(props.thisDay ? dataArray.filter((doc) => props.thisDay ? doc.date === props.thisDay.format("YYYY-MM-DD") : doc) : dataArray)
     }
 
-    useEffect(() => {
-        petchDiary()
-    }, [])
-
-    if (!router.isReady) { return <></> }
+    petchDiary()
+    if (props.thisDay && !router.query.year || props.thisDay && !router.query.date) { return <></> }
 
     return (
         <>
@@ -58,6 +55,7 @@ const Date = (props: Props) => {
             </ButtonsWrapper>
 
             <S.DiaryCardList>
+                {diaryData.length === 0 && <S.NoDiaryText>다이어리가 없습니다.</S.NoDiaryText>}
                 {diaryData.map((diary) => {
                     return (
                         <Card

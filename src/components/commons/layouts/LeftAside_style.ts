@@ -21,6 +21,9 @@ export const LinkStyle = styled.li`
     align-items: center;
     font-size: 13px;
     list-style: none;
-    padding: 10px 0px;
+    padding: 10px 10px;
     border-bottom: 1px solid #dae1e6;
+    transition: 0.1s all ease;
+    &:hover{background-color: #fff ;
+    color:rgb(22, 119, 255)}
 `

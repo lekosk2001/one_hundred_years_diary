@@ -1,5 +1,5 @@
 import * as S from './Year_style'
-import { Button } from 'antd'
+import { Button, Modal } from 'antd'
 import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
 import 'dayjs/locale/ko';
@@ -22,10 +22,16 @@ const Year = () => {
 
     const petchDiary = async () => {
         const dataArray: Data[] = []
-        const result = await getDocs(query(collection(db, "Diary"), orderBy("createdAt", "desc")));
 
-        result.docs.map((doc: DocumentData) => { dataArray.push({ ...doc.data(), id: doc.id }) });
-        setDiaryData(dataArray)
+        try {
+            const result = await getDocs(query(collection(db, "Diary"), orderBy("createdAt", "desc")));
+
+            result.docs.map((doc: DocumentData) => { dataArray.push({ ...doc.data(), id: doc.id }) });
+            setDiaryData(dataArray)
+        } catch (error) {
+            Modal.error({ content: "에러" })
+        }
+
     }
 
     useEffect(() => {
