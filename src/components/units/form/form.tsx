@@ -4,7 +4,7 @@ import { Button, Input, Modal } from 'antd'
 import { useRouter } from 'next/router'
 import { CheckOutlined, LeftOutlined } from '@ant-design/icons'
 import CustomDatePicker from '@/components/commons/CustomDatePicker'
-import { collection, addDoc, getDocs, DocumentData, query, where } from "firebase/firestore";
+import { collection, addDoc, getDocs, DocumentData, query, where, updateDoc, doc } from "firebase/firestore";
 import { db, storage } from '@/pages/_app'
 import dayjs from 'dayjs'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
@@ -25,7 +25,8 @@ const create = (props: Props) => {
     const router = useRouter();
     const [mood, setMood] = useState('보통');
     const [contents, setContents] = useState('');
-    const [imageUrl, setImageUrl] = useState('')
+    const [imageUrl, setImageUrl] = useState('');
+    const [id, setId] = useState('')
     const imageRef = useRef<HTMLInputElement>(null);
     const thisDay = dayjs(router.query.year + "-" + router.query.date);
 
@@ -41,6 +42,7 @@ const create = (props: Props) => {
             const result = await getDocs(query(collection(db, "Diary"), where("date", "==", thisDay.format("YYYY-MM-DD"))))
             result.docs.forEach((doc) => {
                 if (doc.id === props.id) {
+                    setId(doc.id)
                     setMood(doc.data().mood)
                     setContents(doc.data().contents)
                     setImageUrl(doc.data().imageUrl)
@@ -90,7 +92,26 @@ const create = (props: Props) => {
                 mood,
                 contents,
                 date: thisDay.format("YYYY-MM-DD"),
-                createdAt: dayjs().format()
+                createdAt: dayjs().format(),
+                updatedAt: null
+            });
+            router.push(`/${router.query.year}/${router.query.date}`)
+        } catch (e) {
+        }
+    }
+
+    const onUpdate = async () => {
+        if (!id) { return }
+        if (!contents) { Modal.error({ content: "내용이 없습니다." }); return; }
+
+        const docRef = doc(db, 'Diary', id);
+        try {
+            await updateDoc(docRef, {
+                imageUrl,
+                mood,
+                contents,
+                date: thisDay.format("YYYY-MM-DD"),
+                updatedAt: dayjs().format()
             });
             router.push(`/${router.query.year}/${router.query.date}`)
         } catch (e) {
@@ -105,7 +126,7 @@ const create = (props: Props) => {
                     onClick={() => router.push(`/${router.query.year}/${router.query.date}`)}
                 ><LeftOutlined /> 뒤로</Button>
                 <CustomDatePicker isCreate={true} />
-                <Button type="primary" onClick={onSubmit}><CheckOutlined /> 등록</Button>
+                <Button type="primary" onClick={props.id ? onUpdate : onSubmit}><CheckOutlined />{props.id ? "수정" : "등록"}</Button>
             </ButtonsWrapper>
 
             <C.FormStyle>

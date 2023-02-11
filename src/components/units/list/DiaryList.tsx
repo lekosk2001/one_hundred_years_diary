@@ -7,7 +7,7 @@ import dayjs, { Dayjs } from 'dayjs'
 import CustomDatePicker from '@/components/commons/CustomDatePicker'
 import 'dayjs/locale/ko';
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { collection, DocumentData, getDocs, orderBy, query } from "firebase/firestore";
+import { collection, DocumentData, getDocs, limit, orderBy, query } from "firebase/firestore";
 import { db } from '@/pages/_app'
 import { moodImoge } from '@/utils/moodImoge'
 import PageTitle from '@/components/commons/PageTitle'
@@ -32,7 +32,7 @@ const Date = (props: Props) => {
         const dataArray: Data[] = []
 
         try {
-            const result = await getDocs(query(collection(db, "Diary"), orderBy("createdAt", "desc")));
+            const result = await getDocs(query(collection(db, "Diary"), orderBy("createdAt", "desc"), limit(10)));
             result.docs.map((doc: DocumentData) => { dataArray.push({ ...doc.data(), id: doc.id }) });
             setDiaryData(props.thisDay ? dataArray.filter((doc) => props.thisDay ? doc.date === props.thisDay.format("YYYY-MM-DD") : doc) : dataArray)
         } catch (error) {

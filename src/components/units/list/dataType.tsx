@@ -5,4 +5,5 @@ export interface Data {
     date: string
     id: string
     imageUrl: string
+    updatedAt: null | string
 }
