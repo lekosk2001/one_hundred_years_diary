@@ -2,9 +2,9 @@ import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import * as C from './form_style'
 import { Button, Input, Modal } from 'antd'
 import { useRouter } from 'next/router'
-import { CheckOutlined, LeftOutlined } from '@ant-design/icons'
+import { CheckOutlined, DeleteOutlined, LeftOutlined } from '@ant-design/icons'
 import CustomDatePicker from '@/components/commons/CustomDatePicker'
-import { collection, addDoc, getDocs, DocumentData, query, where, updateDoc, doc } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where, updateDoc, doc } from "firebase/firestore";
 import { db, storage } from '@/pages/_app'
 import dayjs from 'dayjs'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
@@ -12,8 +12,6 @@ import { imageValidationCheck } from '@/utils/imageValidationCheck'
 import PageTitle from '@/components/commons/PageTitle'
 import 'dayjs/locale/ko';
 import { ButtonsWrapper } from '@/components/commons/PageButtons'
-import { Data } from '../list/dataType'
-
 dayjs.locale('ko');
 const { TextArea } = Input;
 
@@ -23,7 +21,7 @@ interface Props {
 
 const create = (props: Props) => {
     const router = useRouter();
-    const [mood, setMood] = useState('보통');
+    const [mood, setMood] = useState('');
     const [contents, setContents] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [id, setId] = useState('')
@@ -85,6 +83,7 @@ const create = (props: Props) => {
     const onSubmit = async () => {
 
         if (!contents) { Modal.error({ content: "내용이 없습니다." }); return; }
+        if (!mood) { Modal.error({ content: "기분을 선택해주세요." }); return; }
 
         try {
             await addDoc(collection(db, "Diary"), {
@@ -93,10 +92,12 @@ const create = (props: Props) => {
                 contents,
                 date: thisDay.format("YYYY-MM-DD"),
                 createdAt: dayjs().format(),
-                updatedAt: null
+                updatedAt: null,
+                deletedAt: null
             });
             router.push(`/${router.query.year}/${router.query.date}`)
         } catch (e) {
+            console.log(e)
         }
     }
 
@@ -111,12 +112,29 @@ const create = (props: Props) => {
                 mood,
                 contents,
                 date: thisDay.format("YYYY-MM-DD"),
-                updatedAt: dayjs().format()
+                updatedAt: dayjs().format(),
+                deletedAt: null
             });
             router.push(`/${router.query.year}/${router.query.date}`)
         } catch (e) {
+            console.log(e)
         }
     }
+
+    const onDelete = async () => {
+        if (!id) { return }
+
+        const docRef = doc(db, 'Diary', id);
+        try {
+            await updateDoc(docRef, {
+                deletedAt: dayjs().format()
+            });
+            router.push(`/${router.query.year}/${router.query.date}`)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
 
     return (
         <>
@@ -125,8 +143,9 @@ const create = (props: Props) => {
                 <Button
                     onClick={() => router.push(`/${router.query.year}/${router.query.date}`)}
                 ><LeftOutlined /> 뒤로</Button>
-                <CustomDatePicker isCreate={true} />
-                <Button type="primary" onClick={props.id ? onUpdate : onSubmit}><CheckOutlined />{props.id ? "수정" : "등록"}</Button>
+                {!props.id && <CustomDatePicker isCreate={true} />}
+                {props.id && <Button danger onClick={onDelete}><DeleteOutlined /> 삭제</Button>}
+                <Button type="primary" onClick={props.id ? onUpdate : onSubmit}><CheckOutlined />{props.id ? " 수정" : " 등록"}</Button>
             </ButtonsWrapper>
 
             <C.FormStyle>

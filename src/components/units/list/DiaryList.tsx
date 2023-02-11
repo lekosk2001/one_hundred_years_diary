@@ -33,7 +33,7 @@ const Date = (props: Props) => {
 
         if (props.thisDay) {
             try {
-                const result = await getDocs(query(collection(db, "Diary"), where("date", "==", props.thisDay.format("YYYY-MM-DD")), orderBy("createdAt", "desc"), limit(10)));
+                const result = await getDocs(query(collection(db, "Diary"), where("deletedAt", "==", null), where("date", "==", props.thisDay.format("YYYY-MM-DD")), orderBy("createdAt", "desc"), limit(10)));
                 result.docs.map((doc: DocumentData) => { dataArray.push({ ...doc.data(), id: doc.id }) });
                 setDiaryData(dataArray)
             } catch (error) {
@@ -42,7 +42,7 @@ const Date = (props: Props) => {
         }
         else {
             try {
-                const result = await getDocs(query(collection(db, "Diary"), orderBy("createdAt", "desc"), limit(10)));
+                const result = await getDocs(query(collection(db, "Diary"), where("deletedAt", "==", null), orderBy("createdAt", "desc"), limit(10)));
                 result.docs.map((doc: DocumentData) => { dataArray.push({ ...doc.data(), id: doc.id }) });
                 setDiaryData(dataArray)
             } catch (error) {
