@@ -3,7 +3,7 @@ import React from 'react'
 
 const index = () => {
     return (
-        <Form isEdit={false} id={null} />
+        <Form id={null} />
     )
 }
 

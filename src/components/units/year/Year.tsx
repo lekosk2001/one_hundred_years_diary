@@ -18,6 +18,7 @@ const Year = () => {
 
     const [diaryData, setDiaryData] = useState<Data[]>([])
     const router = useRouter()
+    const today = dayjs()
     const currentYear = Number(router.query.year)
 
     const petchDiary = async () => {
@@ -26,7 +27,9 @@ const Year = () => {
         try {
             const result = await getDocs(query(collection(db, "Diary"), orderBy("createdAt", "desc")));
 
-            result.docs.map((doc: DocumentData) => { dataArray.push({ ...doc.data(), id: doc.id }) });
+            result.docs.map((doc: DocumentData) => {
+                dataArray.push({ ...doc.data(), id: doc.id })
+            });
             setDiaryData(dataArray)
         } catch (error) {
             Modal.error({ content: "에러" })
@@ -38,7 +41,6 @@ const Year = () => {
         petchDiary()
     }, [])
 
-    const today = dayjs()
 
     const fullCalendar = []
     for (let index = 0; index < 12; index++) {

@@ -9,15 +9,15 @@ padding: 20px 0px;
 `
 
 export const CardImage = styled.img`
-    width: "100%";
+    width: 100%;
 `
 
 export const NoDiaryText = styled.p`
-font-size: 13px;
-display: flex;
-justify-content: center;
-align-items: center;
-color: grey;
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: grey;
 
 `
 

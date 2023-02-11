@@ -7,7 +7,7 @@ const index = () => {
     const today = dayjs()
 
     useEffect(() => {
-        router.push(`/${today.year()}/${today.format("MM-DD")}/create`)
+        router.push(`/${today.format("YYYY/MM-DD")}/create`)
     }, [])
 
     return (

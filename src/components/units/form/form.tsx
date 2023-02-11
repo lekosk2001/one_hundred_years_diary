@@ -1,10 +1,10 @@
-import React, { ChangeEvent, useRef, useState } from 'react'
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import * as C from './form_style'
 import { Button, Input, Modal } from 'antd'
 import { useRouter } from 'next/router'
 import { CheckOutlined, LeftOutlined } from '@ant-design/icons'
 import CustomDatePicker from '@/components/commons/CustomDatePicker'
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, DocumentData, query, where } from "firebase/firestore";
 import { db, storage } from '@/pages/_app'
 import dayjs from 'dayjs'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
@@ -12,13 +12,13 @@ import { imageValidationCheck } from '@/utils/imageValidationCheck'
 import PageTitle from '@/components/commons/PageTitle'
 import 'dayjs/locale/ko';
 import { ButtonsWrapper } from '@/components/commons/PageButtons'
+import { Data } from '../list/dataType'
 
 dayjs.locale('ko');
 const { TextArea } = Input;
 
 interface Props {
-    isEdit: boolean
-    id: string | null
+    id: string | string[] | undefined
 }
 
 const create = (props: Props) => {
@@ -27,10 +27,30 @@ const create = (props: Props) => {
     const [contents, setContents] = useState('');
     const [imageUrl, setImageUrl] = useState('')
     const imageRef = useRef<HTMLInputElement>(null);
-
-    if (!router.isReady) { return <></> }
-
     const thisDay = dayjs(router.query.year + "-" + router.query.date);
+
+    useEffect(() => {
+        if (props.id) { petchDiary() }
+    }, [props.id])
+
+    if (!router.query.year) { return <></> }
+    if (!router.query.date) { return <></> }
+
+    const petchDiary = async () => {
+        try {
+            const result = await getDocs(query(collection(db, "Diary"), where("date", "==", thisDay.format("YYYY-MM-DD"))))
+            result.docs.forEach((doc) => {
+                if (doc.id === props.id) {
+                    setMood(doc.data().mood)
+                    setContents(doc.data().contents)
+                    setImageUrl(doc.data().imageUrl)
+                }
+            })
+        } catch (error) {
+            Modal.error({ content: "에러" })
+        }
+    }
+
 
     const onClickMood = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
@@ -79,7 +99,7 @@ const create = (props: Props) => {
 
     return (
         <>
-            <PageTitle title={props.isEdit ? "수정" : "새 글 작성"} sub={thisDay.format("YYYY-MM-DD dddd")} />
+            <PageTitle title={props.id ? "수정" : "새 글 작성"} sub={thisDay.format("YYYY-MM-DD dddd")} />
             <ButtonsWrapper>
                 <Button
                     onClick={() => router.push(`/${router.query.year}/${router.query.date}`)}
@@ -144,6 +164,7 @@ const create = (props: Props) => {
 
                 <TextArea
                     id="contents"
+                    value={contents}
                     showCount
                     maxLength={1000}
                     style={{ height: 300, resize: 'none' }}

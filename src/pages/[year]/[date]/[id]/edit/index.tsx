@@ -1,13 +1,18 @@
 import Form from '@/components/units/form/form'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 type Props = {
-    id: string
 }
 
 const index = (props: Props) => {
+    const route = useRouter()
+    const id = route.query.id
+
+    if (!id) { return <></> }
+
     return (
-        <Form isEdit={true} id={props.id} />
+        <Form id={id} />
     )
 }
 

@@ -12,7 +12,6 @@ interface Props {
 
 const Calendar = (props: Props) => {
     const router = useRouter();
-    if (!router.isReady) { return <></> }
 
     const allDays = [];
     const today = dayjs();

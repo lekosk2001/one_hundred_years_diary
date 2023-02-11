@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { Button, Card, Input } from 'antd'
+import { Button, Card, Input, Modal } from 'antd'
 import * as S from './DiaryList_style'
 import { EditOutlined, LeftOutlined } from '@ant-design/icons'
 import dayjs, { Dayjs } from 'dayjs'
@@ -30,13 +30,20 @@ const Date = (props: Props) => {
     const petchDiary = async () => {
 
         const dataArray: Data[] = []
-        const result = await getDocs(query(collection(db, "Diary"), orderBy("createdAt", "desc")));
 
-        result.docs.map((doc: DocumentData) => { dataArray.push({ ...doc.data(), id: doc.id }) });
-        setDiaryData(props.thisDay ? dataArray.filter((doc) => props.thisDay ? doc.date === props.thisDay.format("YYYY-MM-DD") : doc) : dataArray)
+        try {
+            const result = await getDocs(query(collection(db, "Diary"), orderBy("createdAt", "desc")));
+            result.docs.map((doc: DocumentData) => { dataArray.push({ ...doc.data(), id: doc.id }) });
+            setDiaryData(props.thisDay ? dataArray.filter((doc) => props.thisDay ? doc.date === props.thisDay.format("YYYY-MM-DD") : doc) : dataArray)
+        } catch (error) {
+            Modal.error({ content: "에러" })
+        }
     }
 
-    petchDiary()
+    useEffect(() => {
+        petchDiary()
+    }, [])
+
     if (props.thisDay && !router.query.year || props.thisDay && !router.query.date) { return <></> }
 
     return (
@@ -64,9 +71,10 @@ const Date = (props: Props) => {
                             }
                             key={diary.id}
                             style={{
-                                width: "100%",
+                                // width: "100%",
                                 border: "1px solid #dae1e6",
-                                paddingBottom: "10px"
+                                paddingBottom: "10px",
+                                overflow: "hidden"
                             }}
                             hoverable={true}
                         >
