@@ -16,6 +16,11 @@ export default function App({ Component, pageProps }: AppProps) {
 		<>
 			<Head>
 				<title>100년 다이어리</title>
+				<meta property="og:title" content="100년 다이어리" />
+				<meta
+					property="og:description"
+					content="한 눈에 보는 나의 인생"
+				/>
 			</Head>
 			<Layout>
 				<Component {...pageProps} />

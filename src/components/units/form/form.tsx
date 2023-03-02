@@ -16,7 +16,7 @@ dayjs.locale('ko');
 const { TextArea } = Input;
 
 interface Props {
-    id: string | string[] | undefined
+    id: string | string[] | undefined | null
 }
 
 const create = (props: Props) => {

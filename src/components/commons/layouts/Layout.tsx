@@ -18,8 +18,8 @@ const Layout = (props: Props) => {
 
     const [sizeToggle, setSizeToggle] = useState(false)
 
-    return (
-        <S.LayoutStyle>
+    return (<>
+    <S.LayoutStyle>
             <S.Aside>
                 <LeftAside
                     sizeToggle={sizeToggle}
@@ -41,6 +41,10 @@ const Layout = (props: Props) => {
                 />
             </S.Aside>
         </S.LayoutStyle>
+        <S.Footer>
+            © 2023 ONE HUNDRED YEARS DIARY - 100년 다이어리
+        </S.Footer>
+    </>
     )
 }
 
