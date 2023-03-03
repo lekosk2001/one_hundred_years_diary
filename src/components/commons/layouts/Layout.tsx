@@ -1,8 +1,9 @@
 import * as S from './Layout_style'
 import dayjs from 'dayjs'
-import React, { ChangeEvent, useState } from 'react'
 import RightAside from '@/components/commons/layouts/RightAside'
 import LeftAside from './LeftAside'
+import { useRecoilState } from 'recoil'
+import { birthdayState, sizeToggleState } from '@/store/atoms'
 
 type Props = {
     children: JSX.Element
@@ -10,32 +11,23 @@ type Props = {
 
 const Layout = (props: Props) => {
     const today = dayjs()
-    const [birthDay, setBirthDay] = useState(dayjs("1993-9-1"))
-
-    const onchangeBirthDay = (e: ChangeEvent<HTMLInputElement>) => {
-        setBirthDay(dayjs(e.target.value))
-    }
-
-    const [sizeToggle, setSizeToggle] = useState(false)
-
+    const [birthDay] = useRecoilState(birthdayState)
+    const [sizeToggle, setSizeToggle] = useRecoilState(sizeToggleState)
+    
     return (<>
     <S.LayoutStyle>
             <S.Aside>
-                <LeftAside
-                    sizeToggle={sizeToggle}
-                    setSizeToggle={setSizeToggle}
-                ></LeftAside>
+                <LeftAside/>
             </S.Aside>
 
             <S.Main
                 style={{
-                    width: sizeToggle ? "360px" : "768px"
+                    maxWidth: sizeToggle ? "360px" : "768px"
                 }}
             >{props.children}</S.Main>
 
             <S.Aside>
                 <RightAside
-                    onchangeBirthDay={onchangeBirthDay}
                     birthDay={birthDay}
                     today={today}
                 />

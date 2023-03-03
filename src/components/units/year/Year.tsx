@@ -69,14 +69,14 @@ const Year = () => {
             <PageTitle title={currentYear + "년"} sub={getSub()} />
 
             <ButtonsWrapper>
-                <Button onClick={() => { router.push(`/${currentYear - 1}`) }}>
+                <S.StyledButton onClick={() => { router.push(`/${currentYear - 1}`) }}>
                     <CaretLeftOutlined /> 작년
-                </Button>
-                <Button onClick={() => { router.push(`${dayjs().year()}`) }}>
+                </S.StyledButton>
+                <S.StyledButton onClick={() => { router.push(`${dayjs().year()}`) }}>
                     <CalendarOutlined /> 올해
-                </Button>
+                </S.StyledButton>
 
-                <Button onClick={() => { router.push(`/${currentYear + 1}`) }}>내년 <CaretRightOutlined /></Button>
+                <S.StyledButton onClick={() => { router.push(`/${currentYear + 1}`) }}>내년 <CaretRightOutlined /></S.StyledButton>
             </ButtonsWrapper>
 
             <S.CalendarContainer>

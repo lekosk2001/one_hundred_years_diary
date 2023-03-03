@@ -34,7 +34,7 @@ const Calendar = (props: Props) => {
         allDays.push(<S.DayBlock
             key={eachDay.format()}
             style={{
-                backgroundColor: isToday ? "#ffffd9" : "",
+                backgroundColor: isToday ? "var(--background-today-color)" : "",
             }}
             onClick={() => onClickDate(eachDay)}
         >

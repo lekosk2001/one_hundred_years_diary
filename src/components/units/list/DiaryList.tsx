@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { Button, Card, Input, Modal, Select } from 'antd'
+import {  Card, Select } from 'antd'
 import * as S from './DiaryList_style'
 import { CaretLeftOutlined, CaretRightOutlined, EditOutlined, LeftOutlined } from '@ant-design/icons'
 import dayjs, { Dayjs } from 'dayjs'
@@ -25,7 +25,6 @@ const Date = (props: Props) => {
 
     const router = useRouter()
     const [diaryData, setDiaryData] = useState<Data[]>([])
-    const { Search } = Input;
 
     const petchDiary = async (keyword: string) => {
 
@@ -97,7 +96,7 @@ const Date = (props: Props) => {
                 sub={props.thisDay ? props.thisDay.format("dddd") : "최근에 이런 생각들을 했습니다."}
             />
             <ButtonsWrapper>
-                {props.thisDay && <Button onClick={() => router.push(`/${router.query.year}`)}><LeftOutlined /> 뒤로</Button>}
+                {props.thisDay && <S.StyledButton onClick={() => router.push(`/${router.query.year}`)}><LeftOutlined /> 뒤로</S.StyledButton>}
                 {props.thisDay && <CaretLeftOutlined onClick={() => { router.push(`/${props.thisDay?.subtract(1, "day").format('YYYY/MM-DD')}`) }}></CaretLeftOutlined>}
                 {props.thisDay && <CustomDatePicker isCreate={false} />}
                 {!props.thisDay&& <Select
@@ -122,7 +121,7 @@ const Date = (props: Props) => {
                 
                 {/* {!props.thisDay && <Search placeholder="다이어리 검색" allowClear onSearch={(value) => { petchDiary(value) }} />} */}
                 {props.thisDay && <CaretRightOutlined onClick={() => { router.push(`/${props.thisDay?.add(1, "day").format('YYYY/MM-DD')}`) }}></CaretRightOutlined>}
-                <Button onClick={() => router.push(`${props.thisDay ? props.thisDay.format("/YYYY/MM-DD/") + "create" : dayjs().format("/YYYY/MM-DD/") + "create"}`)}><EditOutlined /> 작성</Button>
+                <S.StyledButton onClick={() => router.push(`${props.thisDay ? props.thisDay.format("/YYYY/MM-DD/") + "create" : dayjs().format("/YYYY/MM-DD/") + "create"}`)}><EditOutlined /> 작성</S.StyledButton>
             </ButtonsWrapper>
 
             <S.DiaryCardList>
@@ -135,7 +134,9 @@ const Date = (props: Props) => {
                             }
                             key={diary.id}
                             style={{
-                                border: "1px solid #dae1e6",
+                                color:"var(--text-color)",
+                                backgroundColor:"var(--background-primary-color)",
+                                border: "1px solid var(--border-color)",
                                 paddingBottom: "10px",
                                 overflow: "hidden"
                             }}

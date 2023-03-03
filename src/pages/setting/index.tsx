@@ -1,10 +1,9 @@
-import React from 'react'
+import Setting from '@/components/units/setting/Setting'
 
-type Props = {}
-
-const setting = (props: Props) => {
+const setting = () => {
+    
     return (
-        <div>setting</div>
+        <Setting/>
     )
 }
 

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
-import * as C from './form_style'
-import { Button, Input, Modal } from 'antd'
+import * as S from './form_style'
+import { Input, Modal } from 'antd'
 import { useRouter } from 'next/router'
 import { CheckOutlined, DeleteOutlined, LeftOutlined } from '@ant-design/icons'
 import CustomDatePicker from '@/components/commons/CustomDatePicker'
@@ -140,80 +140,78 @@ const create = (props: Props) => {
         <>
             <PageTitle title={props.id ? "수정" : "새 글 작성"} sub={thisDay.format("YYYY-MM-DD dddd")} />
             <ButtonsWrapper>
-                <Button
+                <S.StyledButton
                     onClick={() => router.push(`/${router.query.year}/${router.query.date}`)}
-                ><LeftOutlined /> 뒤로</Button>
+                ><LeftOutlined /> 뒤로</S.StyledButton>
                 {!props.id && <CustomDatePicker isCreate={true} />}
-                {props.id && <Button danger onClick={onDelete}><DeleteOutlined /> 삭제</Button>}
-                <Button type="primary" onClick={props.id ? onUpdate : onSubmit}><CheckOutlined />{props.id ? " 수정" : " 등록"}</Button>
+                {props.id && <S.StyledButton danger onClick={onDelete}><DeleteOutlined /> 삭제</S.StyledButton>}
+                <S.StyledButton type="primary" onClick={props.id ? onUpdate : onSubmit}><CheckOutlined />{props.id ? " 수정" : " 등록"}</S.StyledButton>
             </ButtonsWrapper>
 
-            <C.FormStyle>
-                <C.MoodSection>
+            <S.FormStyle>
+                <S.MoodSection>
                     <label>오늘은 어떠셨나요?</label>
-                    <C.MoodContainer>
-                        <C.Mood onClick={onClickMood} id="보통" mood={mood}>
-                            <C.Imoge>😑</C.Imoge>
+                    <S.MoodContainer>
+                        <S.Mood onClick={onClickMood} id="보통" mood={mood}>
+                            <S.Imoge>😑</S.Imoge>
                             보통
-                        </C.Mood>
-                        <C.Mood onClick={onClickMood} id="뿌듯" mood={mood}>
-                            <C.Imoge>😊</C.Imoge>
+                        </S.Mood>
+                        <S.Mood onClick={onClickMood} id="뿌듯" mood={mood}>
+                            <S.Imoge>😊</S.Imoge>
                             뿌듯
-                        </C.Mood>
-                        <C.Mood onClick={onClickMood} id="행복" mood={mood}>
-                            <C.Imoge>😄</C.Imoge>
+                        </S.Mood>
+                        <S.Mood onClick={onClickMood} id="행복" mood={mood}>
+                            <S.Imoge>😄</S.Imoge>
                             행복
-                        </C.Mood>
-                        <C.Mood onClick={onClickMood} id="설렘" mood={mood}>
-                            <C.Imoge>🥰</C.Imoge>
+                        </S.Mood>
+                        <S.Mood onClick={onClickMood} id="설렘" mood={mood}>
+                            <S.Imoge>🥰</S.Imoge>
                             설렘
-                        </C.Mood>
-                        <C.Mood onClick={onClickMood} id="평온" mood={mood}>
-                            <C.Imoge>😌</C.Imoge>
+                        </S.Mood>
+                        <S.Mood onClick={onClickMood} id="평온" mood={mood}>
+                            <S.Imoge>😌</S.Imoge>
                             평온
-                        </C.Mood>
-                        <C.Mood onClick={onClickMood} id="슬픔" mood={mood}>
-                            <C.Imoge>😭</C.Imoge>
+                        </S.Mood>
+                        <S.Mood onClick={onClickMood} id="슬픔" mood={mood}>
+                            <S.Imoge>😭</S.Imoge>
                             슬픔
-                        </C.Mood>
-                        <C.Mood onClick={onClickMood} id="피곤" mood={mood}>
-                            <C.Imoge>😩</C.Imoge>
+                        </S.Mood>
+                        <S.Mood onClick={onClickMood} id="피곤" mood={mood}>
+                            <S.Imoge>😩</S.Imoge>
                             피곤
-                        </C.Mood>
-                        <C.Mood onClick={onClickMood} id="불안" mood={mood}>
-                            <C.Imoge>😰</C.Imoge>
+                        </S.Mood>
+                        <S.Mood onClick={onClickMood} id="불안" mood={mood}>
+                            <S.Imoge>😰</S.Imoge>
                             불안
-                        </C.Mood>
-                        <C.Mood onClick={onClickMood} id="우울" mood={mood}>
-                            <C.Imoge>😔</C.Imoge>
+                        </S.Mood>
+                        <S.Mood onClick={onClickMood} id="우울" mood={mood}>
+                            <S.Imoge>😔</S.Imoge>
                             우울
-                        </C.Mood>
-                        <C.Mood onClick={onClickMood} id="화남" mood={mood}>
-                            <C.Imoge>😡</C.Imoge>
+                        </S.Mood>
+                        <S.Mood onClick={onClickMood} id="화남" mood={mood}>
+                            <S.Imoge>😡</S.Imoge>
                             화남
-                        </C.Mood>
-                    </C.MoodContainer>
+                        </S.Mood>
+                    </S.MoodContainer>
 
-                </C.MoodSection>
+                </S.MoodSection>
 
-                <C.ImageUploadSection>
-                    <Button onClick={onClickUploadImage} style={{ width: "100%" }}>이미지 업로드</Button>
+                <S.ImageUploadSection>
+                    <S.StyledButton onClick={onClickUploadImage} style={{ width: "100%" }}>이미지 업로드</S.StyledButton>
                     <input ref={imageRef} type='file' onChange={onChangeUpload} style={{ display: "none" }} />
                     {imageUrl && <img src={imageUrl}></img>}
-                </C.ImageUploadSection>
+                </S.ImageUploadSection>
 
                 <TextArea
                     id="contents"
                     value={contents}
                     showCount
                     maxLength={1000}
-                    style={{ height: 300, resize: 'none' }}
                     onChange={onChangeContents}
                     placeholder="오늘의 하루를 기록해주세요."
+                    style={{height: 300,resize: "none",color:"var(--text-color)"}}
                 />
-
-
-            </C.FormStyle>
+            </S.FormStyle>
         </>
     )
 }
