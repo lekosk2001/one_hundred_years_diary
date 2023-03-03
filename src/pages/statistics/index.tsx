@@ -1,10 +1,9 @@
+import Statistics from '@/components/units/statistics/Statistics'
 import React from 'react'
 
-type Props = {}
-
-const statistics = (props: Props) => {
+const statistics = () => {
     return (
-        <div>statistics</div>
+        <Statistics/>
     )
 }
 

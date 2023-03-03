@@ -13,6 +13,7 @@ import { moodImoge } from '@/utils/moodImoge'
 import PageTitle from '@/components/commons/PageTitle'
 import { ButtonsWrapper } from '@/components/commons/PageButtons'
 import { Data } from '@/components/units/list/dataType'
+import { Spin } from 'antd';
 
 dayjs.locale('ko');
 dayjs.extend(relativeTime)
@@ -39,7 +40,6 @@ const Date = (props: Props) => {
                 ));
                 result.docs.map((doc: DocumentData) => { dataArray.push({ ...doc.data(), id: doc.id }) });
                 setDiaryData(dataArray)
-                console.log("무검색")
             } catch (error) {
                 console.log(error)
             }
@@ -53,8 +53,6 @@ const Date = (props: Props) => {
                     orderBy("createdAt", "desc"),
                     limit(10)
                 ));
-
-                console.log("검색")
                 result.docs.map((doc: DocumentData) => { dataArray.push({ ...doc.data(), id: doc.id }) });
                 setDiaryData(dataArray)
             } catch (error) {
@@ -72,7 +70,6 @@ const Date = (props: Props) => {
                 result.docs.map((doc: DocumentData) => { dataArray.push({ ...doc.data(), id: doc.id }) });
                 setDiaryData(dataArray)
 
-                console.log("무검색")
             } catch (error) {
                 console.log(error)
             }
@@ -87,7 +84,7 @@ const Date = (props: Props) => {
         petchDiary(value)
     };
 
-    if (props.thisDay && !router.query.year || props.thisDay && !router.query.date) { return <></> }
+    if (props.thisDay && !router.query.year || props.thisDay && !router.query.date) { return <Spin/> }
 
     return (
         <>

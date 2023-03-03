@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import dayjs from 'dayjs'
+import { Spin } from 'antd';
 
 const index = () => {
     const router = useRouter();
@@ -11,7 +12,7 @@ const index = () => {
     }, [])
 
     return (
-        <></>
+        <Spin/>
     )
 }
 

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const LogoBox = styled.div`
-	@media (max-width: 1024px) {
+	@media (max-width: 1100px) {
 		a {
 			display: flex;
 			align-items: center;
@@ -12,7 +12,7 @@ export const LogoBox = styled.div`
 
 export const Logo = styled.div`
 	font-size: 36px;
-	@media (max-width: 1024px) {
+	@media (max-width: 1100px) {
 		display: flex;
 		justify-content: center;
 	}
@@ -24,7 +24,7 @@ export const LinkLists = styled.ul`
 	flex-direction: column;
 	margin: 10px 0px;
 
-	@media (max-width: 1024px) {
+	@media (max-width: 1100px) {
 		position: fixed;
 		flex-direction: row;
 		background-color: var(--background-primary-color);
@@ -39,7 +39,7 @@ export const LinkLists = styled.ul`
 
 export const Title = styled.h1`
 	word-break: keep-all;
-	@media (max-width: 1024px) {
+	@media (max-width: 1100px) {
 		font-size: 36px;
 		text-align: center;
 	}
@@ -58,7 +58,7 @@ export const LinkStyle = styled.li`
 		background-color: var(--background-primary-color);
 		color: rgb(22, 119, 255);
 	}
-	@media (max-width: 1024px) {
+	@media (max-width: 1100px) {
 		font-size: 16px;
 		gap: 5px;
 		height: 60px;
@@ -66,5 +66,24 @@ export const LinkStyle = styled.li`
 		border-bottom: 0px;
 		flex-direction: column;
 		background-color: var(--background-primary-color);
+	}
+`;
+
+export const Github = styled.a`
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	justify-content: center;
+	font-size: 11px;
+	color: gray;
+	text-align: center;
+	transition: 0.1s all ease;
+	height: 20px;
+	&:hover {
+		color: var(--text-color);
+	}
+
+	@media (max-width: 1100px) {
+		display: none;
 	}
 `;

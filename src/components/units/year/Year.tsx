@@ -11,6 +11,7 @@ import Calendar from '@/components/commons/Calendar';
 import PageTitle from '@/components/commons/PageTitle';
 import { db } from '@/pages/_app';
 import { ButtonsWrapper } from '@/components/commons/PageButtons';
+import { Spin } from 'antd';
 
 dayjs.locale('ko');
 
@@ -55,7 +56,7 @@ const Year = () => {
     }
 
 
-    if (!currentYear) { return <></> }
+    if (!currentYear) { return <Spin/> }
 
     const getSub = () => {
         if (currentYear === today.year()) { return "오늘은 " + today.format("YYYY년 MM월 DD일 dddd입니다.") }

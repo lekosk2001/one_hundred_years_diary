@@ -2,6 +2,7 @@ import { DatePicker } from 'antd'
 import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { Spin } from 'antd';
 
 interface Props {
     isCreate: boolean
@@ -9,7 +10,7 @@ interface Props {
 
 const CustomDatePicker = (props: Props) => {
     const router = useRouter()
-    if (!router.query.year || !router.query.date) { return <></> }
+    if (!router.query.year || !router.query.date) { return <Spin /> }
 
     const onChangeDate = (date: any) => {
         if (date) {

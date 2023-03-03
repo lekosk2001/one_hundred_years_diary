@@ -1,4 +1,4 @@
-import { BarsOutlined, DotChartOutlined, HomeOutlined, PlusCircleOutlined, SettingOutlined } from '@ant-design/icons'
+import { BarsOutlined, DotChartOutlined, GithubOutlined, HomeOutlined, PlusCircleOutlined, SettingOutlined } from '@ant-design/icons'
 import Link from 'next/link'
 import React from 'react'
 import * as S from './LeftAside_style'
@@ -19,6 +19,7 @@ const LeftAside = () => {
                 <Link href={"/statistics"}><S.LinkStyle><DotChartOutlined /> 통계</S.LinkStyle></Link>
                 <Link href={"/setting"}><S.LinkStyle><SettingOutlined /> 설정</S.LinkStyle></Link>
             </S.LinkLists>
+            <S.Github href={"https://github.com/lekosk2001/one_hundred_years_diary"} target='_blank'><GithubOutlined /> github Docs</S.Github>
 
         </>
     )

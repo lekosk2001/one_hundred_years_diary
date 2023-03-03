@@ -11,7 +11,7 @@ export const Main = styled.main`
 	border: 1px solid var(--border-color);
 	overflow: hidden;
 
-	@media (max-width: 1024px) {
+	@media (max-width: 1100px) {
 	}
 
 	@media (max-width: 768px) {
@@ -27,7 +27,7 @@ export const LayoutStyle = styled.div`
 	gap: 20px;
 	justify-content: center;
 
-	@media (max-width: 1024px) {
+	@media (max-width: 1100px) {
 		flex-direction: column;
 		align-items: center;
 		padding: 0px;
@@ -37,27 +37,15 @@ export const LayoutStyle = styled.div`
 export const Aside = styled.aside`
 	display: flex;
 	width: 120px;
+	max-width: 768px;
 	flex-direction: column;
 	gap: 10px;
 	p {
 		font-size: 13px;
 	}
-	@media (max-width: 1024px) {
+	@media (max-width: 1100px) {
 		align-items: center;
 		width: 100%;
 		padding: 0px 20px;
-	}
-`;
-
-export const Footer = styled.footer`
-	display: flex;
-	color: gray;
-	font-size: 11px;
-	justify-content: center;
-	align-items: center;
-	border-top: 1px solid var(--border-color);
-	height: 100px;
-	@media (max-width: 1024px) {
-		margin-bottom: 60px;
 	}
 `;

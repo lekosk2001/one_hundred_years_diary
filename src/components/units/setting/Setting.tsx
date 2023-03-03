@@ -1,13 +1,12 @@
 import PageTitle from '@/components/commons/PageTitle'
 import { birthdayState, darkModeState, sizeToggleState } from '@/store/atoms'
-import { Button, Input, InputRef, Switch } from 'antd'
+import { InputRef, Switch } from 'antd'
 import dayjs from 'dayjs'
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import * as S from './Setting_style'
-type Props = {}
 
-const Setting = (props: Props) => {
+const Setting = () => {
     
     const [birthDay, setBirthDay] = useRecoilState(birthdayState)
     const [sizeToggle, setSizeToggle] = useRecoilState(sizeToggleState)
@@ -19,17 +18,20 @@ const Setting = (props: Props) => {
 
         const currentSize = localStorage.getItem("size");
         if(currentSize === "mini"){setSizeToggle(true)}
+
+        const currentBirthDay = localStorage.getItem("birthday");
+        if(currentBirthDay){setBirthDay(dayjs(currentBirthDay))}        
     }, [])
     
     const onchangeBirthDay = (e: ChangeEvent<HTMLInputElement>) => {
         setBirthDay(dayjs(e.target.value))
+        localStorage.setItem("birthday", e.target.value)
     }
 
     const onChangeSize = (checked: boolean) => {
         setSizeToggle(checked)
         if (checked) {localStorage.setItem("size", "mini")}
         else {localStorage.setItem("size", "full")}
-        
     };
 
     const inputRef = useRef<InputRef>(null);
@@ -58,7 +60,7 @@ const Setting = (props: Props) => {
         <>
             <PageTitle
                 title="설정"
-                sub="설정 페이지입니다."
+                sub="설정한 사항은 브라우저에 저장됩니다."
             />
             <S.SettingContainer>
                 <S.SettingItem onClick={()=>{inputRef.current?.select()}}>
@@ -70,7 +72,7 @@ const Setting = (props: Props) => {
                         ref={inputRef}
                         type='date'
                         onChange={onchangeBirthDay}
-                        defaultValue={birthDay.format("YYYY-MM-DD")}>
+                        value={birthDay.format("YYYY-MM-DD")}>
                     </S.StyledInput>
                 </S.SettingItem>
 
@@ -95,7 +97,16 @@ const Setting = (props: Props) => {
                     checked={darkMode}
                     onChange={onChangeDarkMode}/>
                 </S.SettingItem>
+
+                <S.SettingItem>
+                    <S.SettingItemLabelBox>
+                        <S.SettingItemLabel>로그인</S.SettingItemLabel>
+                        <S.SettingItemDesc>회원가입 기능 준비중입니다.</S.SettingItemDesc>
+                    </S.SettingItemLabelBox>
+                </S.SettingItem>
             </S.SettingContainer>
+
+            
 
         </>
     )

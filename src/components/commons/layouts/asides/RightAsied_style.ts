@@ -3,11 +3,14 @@ import styled from "@emotion/styled";
 export const TotalYearsSection = styled.section`
 	max-width: 495px;
 	width: 100%;
-	padding: 20px 0px;
+	padding: 10px 0px;
 `;
 
 export const Birthday = styled.section`
 	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
 `;
 
 export const AsideText = styled.p``;

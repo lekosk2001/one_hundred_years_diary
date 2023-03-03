@@ -15,6 +15,8 @@ import { ButtonsWrapper } from '@/components/commons/PageButtons'
 dayjs.locale('ko');
 const { TextArea } = Input;
 
+import { Spin } from 'antd';
+
 interface Props {
     id: string | string[] | undefined | null
 }
@@ -32,8 +34,8 @@ const create = (props: Props) => {
         if (props.id) { petchDiary() }
     }, [props.id])
 
-    if (!router.query.year) { return <></> }
-    if (!router.query.date) { return <></> }
+    if (!router.query.year) { return <Spin/> }
+    if (!router.query.date) { return <Spin/> }
 
     const petchDiary = async () => {
         try {

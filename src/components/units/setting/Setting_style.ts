@@ -26,7 +26,7 @@ export const SettingItem = styled.div`
 		background-color: var(--background-secondary-color);
 	}
 
-	@media (max-width: 1024px) {
+	@media (max-width: 1100px) {
 		flex-direction: column;
 		align-items: flex-start;
 		gap: 10px;
